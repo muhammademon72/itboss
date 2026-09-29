@@ -75,7 +75,7 @@ export default function UserManagement({
 
   // Creation Custom Ledger Permissions
   const [customPerms, setCustomPerms] = useState<Record<string, { view: boolean; edit: boolean; delete: boolean }>>({
-    requisitions: { view: true, edit: true, delete: true },
+    requisitions: { view: false, edit: false, delete: false },
     acknowledgements: { view: false, edit: false, delete: false },
     returnChallans: { view: false, edit: false, delete: false },
     quotations: { view: false, edit: false, delete: false },

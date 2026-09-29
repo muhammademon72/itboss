@@ -232,17 +232,11 @@ export default function PurchaseBillDashboard({
       let finalY = (doc as any).lastAutoTable.finalY + 10;
       const pageHeight = doc.internal.pageSize.height;
 
-      // Check if both totals and signatures fit on the current page
-      // Grand Total is at finalY + 12
-      // Signature line is at finalY + 12 + 25.4 = finalY + 37.4
-      // Signature text is at finalY + 37.4 + 5 = finalY + 42.4
-      // Make sure it fits before the page footer boundary
       if (finalY + 42.4 > pageHeight - 15) {
         doc.addPage();
-        finalY = 40; // reset starting position for Totals Box on new page
+        finalY = 40;
       }
 
-      // Totals Box
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(10);
       doc.setTextColor(51, 65, 85);
@@ -255,51 +249,36 @@ export default function PurchaseBillDashboard({
       doc.setTextColor(79, 70, 229);
       doc.text(`Grand Total:  ${bill.grandTotal.toLocaleString()} TK`, rightX, finalY + 12, { align: 'right' });
 
-      // Signatures exactly 1 inch (25.4 mm) below Grand Total (which is at finalY + 12)
       const signatureY = finalY + 12 + 25.4;
 
       doc.setFontSize(9);
       doc.setTextColor(100, 116, 139);
       
-      // Prepared By
       doc.line(10, signatureY, 60, signatureY);
       doc.text('Prepared By', 35, signatureY + 5, { align: 'center' });
 
-      // Checked By
       doc.line(80, signatureY, 130, signatureY);
       doc.text('Checked By', 105, signatureY + 5, { align: 'center' });
 
-      // Received By
       doc.line(150, signatureY, 200, signatureY);
       doc.text('Received By', 175, signatureY + 5, { align: 'center' });
 
-      // Authorized Signature
       doc.line(220, signatureY, 270, signatureY);
       doc.text('Authorized Signature', 245, signatureY + 5, { align: 'center' });
       
-      // Add auto-page numbers at the footer of all pages
       const pageCount = (doc as any).getNumberOfPages();
       for (let i = 1; i <= pageCount; i++) {
         doc.setPage(i);
-        
-        // Draw Footer
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(8);
-        doc.setTextColor(148, 163, 184); // light gray slate
-        
+        doc.setTextColor(148, 163, 184);
         const pageWidth = doc.internal.pageSize.width;
         const pageHeight = doc.internal.pageSize.height;
-        
-        // Draw a thin horizontal separator line above the footer
         doc.setDrawColor(241, 245, 249); 
         doc.setLineWidth(0.2);
         doc.line(14, pageHeight - 12, pageWidth - 14, pageHeight - 12);
-        
-        // Right-aligned page number
         const footerText = `Page ${i} of ${pageCount}`;
         doc.text(footerText, pageWidth - 14, pageHeight - 8, { align: 'right' });
-        
-        // Left-aligned company branding
         doc.text(`${companyName.toUpperCase()} • PURCHASE BILL SUMMARY`, 14, pageHeight - 8, { align: 'left' });
       }
 
@@ -394,13 +373,6 @@ export default function PurchaseBillDashboard({
         </div>
 
         <div className="flex flex-wrap gap-2">
-          <button
-            onClick={exportAllToExcel}
-            className="flex items-center gap-1.5 px-4.5 py-2.5 bg-teal-600 hover:bg-teal-500 text-white rounded-xl text-xs font-bold shadow-md hover:shadow-lg transition duration-150 cursor-pointer"
-          >
-            <FileSpreadsheet className="h-4 w-4" />
-            Export All to Excel
-          </button>
           {canEdit && (
             <button
               onClick={onNewForm}
@@ -438,10 +410,10 @@ export default function PurchaseBillDashboard({
           <button
             type="button"
             onClick={() => setIsColumnDropdownOpen(!isColumnDropdownOpen)}
-            className={`px-3.5 py-2 text-xs font-semibold border rounded-lg flex items-center gap-1.5 transition cursor-pointer ${
+            className={`px-3.5 py-2 text-xs font-semibold rounded-lg flex items-center gap-1.5 transition cursor-pointer ${
               visibleColumns.length < ALL_COLUMNS.length
-                ? 'bg-amber-50 text-amber-900 border-amber-300'
-                : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                ? 'bg-amber-50 text-amber-900'
+                : 'bg-slate-50 text-slate-700 hover:bg-slate-100'
             }`}
             title="Hide or show table columns"
           >
