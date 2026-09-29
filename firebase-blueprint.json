@@ -1,0 +1,258 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with roles and permissions",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "viewer", "editor"] },
+        "permissions": {
+          "type": "object",
+          "properties": {
+            "requisitions": {
+              "type": "object",
+              "properties": {
+                "view": { "type": "boolean" },
+                "edit": { "type": "boolean" },
+                "delete": { "type": "boolean" }
+              }
+            },
+            "acknowledgements": {
+              "type": "object",
+              "properties": {
+                "view": { "type": "boolean" },
+                "edit": { "type": "boolean" },
+                "delete": { "type": "boolean" }
+              }
+            },
+            "returnChallans": {
+              "type": "object",
+              "properties": {
+                "view": { "type": "boolean" },
+                "edit": { "type": "boolean" },
+                "delete": { "type": "boolean" }
+              }
+            },
+            "quotations": {
+              "type": "object",
+              "properties": {
+                "view": { "type": "boolean" },
+                "edit": { "type": "boolean" },
+                "delete": { "type": "boolean" }
+              }
+            },
+            "purchaseBills": {
+              "type": "object",
+              "properties": {
+                "view": { "type": "boolean" },
+                "edit": { "type": "boolean" },
+                "delete": { "type": "boolean" }
+              }
+            }
+          }
+        },
+        "targets": {
+          "type": "array",
+          "description": "List of targets"
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "MonitorTarget": {
+      "title": "MonitorTarget",
+      "description": "A target to monitor for latency and packet loss",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["ip", "web"] },
+        "address": { "type": "string" },
+        "active": { "type": "boolean" },
+        "latency": { "type": "number" },
+        "history": { "type": "array" },
+        "lossCount": { "type": "number" },
+        "totalPings": { "type": "number" }
+      },
+      "required": ["id", "name", "address"]
+    },
+    "UserTargets": {
+      "title": "UserTargets",
+      "description": "Targets for a specific user",
+      "type": "object",
+      "properties": {
+        "targets": {
+          "type": "array",
+          "description": "List of targets"
+        }
+      },
+      "required": ["targets"]
+    },
+    "VisitingCard": {
+      "title": "VisitingCard",
+      "description": "A professional visiting card contact record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "company": { "type": "string" },
+        "designation": { "type": "string" },
+        "category": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "address": { "type": "string" },
+        "website": { "type": "string" },
+        "notes": { "type": "string" },
+        "remarks": { "type": "string" },
+        "frontImage": { "type": "string" },
+        "backImage": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["category"]
+    },
+    "VisitingCardCategory": {
+      "title": "VisitingCardCategory",
+      "description": "Category for visiting cards",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name"]
+    },
+    "DamagedStockProposal": {
+      "title": "DamagedStockProposal",
+      "description": "Proposal for the sale and disposal of broken or damaged product stock",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "proposalNumber": { "type": "string" },
+        "date": { "type": "string" },
+        "subject": { "type": "string" },
+        "submittedBy": { "type": "string" },
+        "approvedBy": { "type": "string" },
+        "status": { "type": "string" },
+        "remarks": { "type": "string" },
+        "items": { "type": "array" },
+        "totalOriginalValue": { "type": "number" },
+        "totalProposedSaleValue": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["proposalNumber", "date", "subject", "items"]
+    },
+    "HotspotCredential": {
+      "title": "HotspotCredential",
+      "description": "Hotspot information user credential and terminal script record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "branchCode": { "type": "string" },
+        "userName": { "type": "string" },
+        "departmentName": { "type": "string" },
+        "userId": { "type": "string" },
+        "userPass": { "type": "string" },
+        "macAddress": { "type": "string" },
+        "terminalCode": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userName", "userId", "userPass"]
+    },
+    "Credential": {
+      "title": "Credential",
+      "description": "User's website credential",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner of the credential" },
+        "ledgerId": { "type": "string", "description": "Ledger ID" },
+        "websiteName": { "type": "string", "description": "Website Name" },
+        "userNameOrMobile": { "type": "string", "description": "User Name or mobile number" },
+        "email": { "type": "string", "description": "Email address" },
+        "password": { "type": "string", "description": "Password" },
+        "remarks": { "type": "string", "description": "Remarks" }
+      },
+      "required": ["userId", "ledgerId", "websiteName", "userNameOrMobile", "password"]
+    },
+    "Ledger": {
+      "title": "Ledger",
+      "description": "User's ledger for organizing credentials",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner of the ledger" },
+        "name": { "type": "string", "description": "Ledger Name" }
+      },
+      "required": ["userId", "name"]
+    },
+    "IpPhoneRecord": {
+      "title": "IpPhoneRecord",
+      "description": "IP Phone hardware information, extension, network configuration, and SIP authentication record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "sl": { "type": "number" },
+        "branchCode": { "type": "string" },
+        "locationName": { "type": "string" },
+        "userName": { "type": "string" },
+        "identyNumber": { "type": "string" },
+        "designation": { "type": "string" },
+        "department": { "type": "string" },
+        "extensionNumber": { "type": "string" },
+        "ipAddress": { "type": "string" },
+        "macAddress": { "type": "string" },
+        "brandModel": { "type": "string" },
+        "serialNumber": { "type": "string" },
+        "sipUser": { "type": "string" },
+        "sipPassword": { "type": "string" },
+        "pbxServer": { "type": "string" },
+        "subnetMask": { "type": "string" },
+        "gateway": { "type": "string" },
+        "port": { "type": "string" },
+        "status": { "type": "string", "enum": ["Active", "Inactive", "Damage", "Spare"] },
+        "distributionDate": { "type": "string" },
+        "remarks": { "type": "string" },
+        "createdBy": { "type": "string" },
+        "createdByEmail": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userName", "extensionNumber", "branchCode"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserTargets",
+      "description": "Collection storing targets for each user"
+    },
+    "/visiting_cards/{cardId}": {
+      "schema": "VisitingCard",
+      "description": "Collection of professional visiting cards"
+    },
+    "/visiting_card_categories/{catId}": {
+      "schema": "VisitingCardCategory",
+      "description": "Collection of categories for visiting cards"
+    },
+    "/damaged_stock_proposals/{proposalId}": {
+      "schema": "DamagedStockProposal",
+      "description": "Proposals for the sale and disposal of broken/damaged product stock"
+    },
+    "/hotspot_credentials/{id}": {
+      "schema": "HotspotCredential",
+      "description": "Hotspot credentials and MikroTik terminal script records"
+    },
+    "/ledgers/{ledgerId}": {
+      "schema": "Ledger",
+      "description": "Collection of ledgers"
+    },
+    "/credentials/{credentialId}": {
+      "schema": "Credential",
+      "description": "Collection of credentials"
+    },
+    "/ip_phone_records/{recordId}": {
+      "schema": "IpPhoneRecord",
+      "description": "Collection of IP Phone Info Ledger records"
+    }
+  }
+}

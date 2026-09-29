@@ -1,0 +1,83 @@
+731:      const margin = 8; // 8mm for professional A4 border
+812:      <div className="no-print mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-5">
+816:            className="px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 flex items-center transition text-xs font-bold shadow-xs cursor-pointer"
+822:            <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 border border-indigo-150 px-2.5 py-1 rounded-full">
+837:                className="px-4 py-1.5 text-xs font-bold border border-emerald-700 rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 flex items-center transition shadow-sm disabled:opacity-50 cursor-pointer"
+847:                className="px-4 py-1.5 text-xs font-bold border border-amber-600 text-amber-700 bg-amber-50 hover:bg-amber-100 rounded-lg flex items-center transition shadow-xs cursor-pointer shadow-sm"
+855:                className="px-4 py-1.5 text-xs font-bold border border-indigo-600 text-indigo-700 bg-indigo-50/80 hover:bg-indigo-100 rounded-lg flex items-center transition shadow-xs cursor-pointer disabled:opacity-50"
+862:                className="px-4 py-1.5 text-xs font-bold border border-slate-300 text-slate-700 bg-white hover:bg-slate-50 rounded-lg flex items-center transition shadow-xs cursor-pointer"
+873:        <div className={`no-print mb-4 p-4 rounded-xl flex items-center justify-between shadow-xs text-xs font-semibold ${message.type === 'success' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'}`}>
+884:        <div className="no-print mb-6 p-5 bg-slate-900 border border-slate-800 rounded-xl text-slate-300 font-sans shadow-md">
+896:            <div className={`p-4 rounded-xl border flex flex-col justify-between transition-all ${
+898:                ? 'bg-slate-800/60 border-emerald-500/20' 
+899:                : 'bg-slate-800/30 border-slate-800'
+911:                <p className="text-[11px] text-slate-400 font-medium truncate mt-1 bg-slate-900/50 px-2 py-1.5 rounded border border-slate-800 select-all">
+921:                    ? 'bg-slate-800 text-slate-500 border border-slate-700/50 cursor-default' 
+930:            <div className={`p-4 rounded-xl border flex flex-col justify-between transition-all ${
+932:                ? 'bg-slate-800/60 border-emerald-500/20' 
+933:                : 'bg-slate-800/30 border-slate-800'
+951:                  className="w-full text-xs bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-slate-200 outline-none focus:ring-1 focus:ring-indigo-500/60 disabled:opacity-60"
+963:                    ? 'bg-slate-800 text-slate-500 border border-slate-700/50 cursor-default' 
+972:            <div className={`p-4 rounded-xl border flex flex-col justify-between transition-all ${
+974:                ? 'bg-slate-800/60 border-emerald-500/20' 
+975:                : 'bg-slate-800/30 border-slate-800'
+993:                  className="w-full text-xs bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-slate-200 outline-none focus:ring-1 focus:ring-indigo-500/60 disabled:opacity-60"
+1005:                    ? 'bg-slate-800 text-slate-500 border border-slate-700/50 cursor-default' 
+1014:            <div className={`p-4 rounded-xl border flex flex-col justify-between transition-all ${
+1016:                ? 'bg-slate-800/60 border-emerald-500/20' 
+1017:                : 'bg-slate-800/30 border-slate-800'
+1035:                  className="w-full text-xs bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-slate-200 outline-none focus:ring-1 focus:ring-indigo-500/60 disabled:opacity-60"
+1047:                    ? 'bg-slate-800 text-slate-500 border border-slate-700/50 cursor-default' 
+1060:      <div id="equipment-requisition-form-card" style={{ backgroundColor: '#ffffff', color: '#000000' }} className="bg-white border border-gray-400 pt-3 px-4 md:pt-4 md:px-6 pb-4 shadow-md font-serif print-sheet">
+1080:                <span className="font-sans border-b border-gray-400 pb-0.5 font-medium px-1 flex-1" style={{ color: '#111827' }}>{formatDisplayDate(date)}</span>
+1087:                  className="font-sans border-b border-gray-300 focus:border-black outline-none px-1 py-0.5 flex-1 bg-transparent text-sm"
+1093:            <div style={{ backgroundColor: '#f9fafb', borderColor: '#e5e7eb' }} className="font-sans text-xs space-y-1 p-2 rounded border">
+1102:          <div className="border border-black font-sans text-xs">
+1105:            <div className="grid grid-cols-12 border-b border-black">
+1106:              <div style={{ backgroundColor: '#f3f4f6', color: '#000000' }} className="col-span-6 px-3 border-r border-black font-bold flex items-center whitespace-nowrap h-7">
+1118:                    className={`w-full h-full py-0 my-0 border-none bg-transparent outline-none font-medium text-left ${getDynamicFontSize(applicantName)}`}
+1126:            <div className="grid grid-cols-12 border-b border-black">
+1127:              <div style={{ backgroundColor: '#f3f4f6', color: '#000000' }} className="col-span-6 px-3 border-r border-black font-bold flex items-center whitespace-nowrap h-7">
+1137:                    className={`w-full h-full py-0 my-0 border-none bg-transparent outline-none text-black font-medium text-left ${getDynamicFontSize(applicantDepartment)}`}
+1149:            <div className="grid grid-cols-12 border-b border-black">
+1150:              <div style={{ backgroundColor: '#f3f4f6', color: '#000000' }} className="col-span-6 px-3 border-r border-black font-bold flex flex-row items-center h-7">
+1162:                    className={`w-full h-full py-0 my-0 border-none bg-transparent outline-none font-mono text-left ${getDynamicFontSize(employeeId)}`}
+1170:            <div className="grid grid-cols-12 border-b border-black">
+1171:              <div style={{ backgroundColor: '#f3f4f6', color: '#000000' }} className="col-span-6 px-3 border-r border-black font-bold flex flex-row items-center h-7">
+1181:                    className={`w-full h-full py-0 my-0 border-none bg-transparent outline-none text-black font-medium text-left ${getDynamicFontSize(branchName)}`}
+1193:            <div className="grid grid-cols-12 border-b border-black">
+1194:              <div style={{ backgroundColor: '#f3f4f6', color: '#000000' }} className="col-span-6 px-3 border-r border-black font-bold flex flex-row items-center h-7">
+1204:                    className={`w-full h-full py-0 my-0 border-none bg-transparent outline-none text-black font-medium text-left ${getDynamicFontSize(address)}`}
+1217:              <div style={{ backgroundColor: '#f3f4f6', color: '#000000' }} className="col-span-6 px-3 border-r border-black font-bold flex flex-row items-center h-7">
+1229:                    className={`w-full h-full py-0 my-0 border-none bg-transparent outline-none font-medium text-left ${getDynamicFontSize(contact)}`}
+1239:        <div className="border border-black p-3 mb-3" style={{ color: '#000000' }}>
+1251:                     style={{ backgroundColor: isChecked ? '#000000' : '#ffffff', color: isChecked ? '#ffffff' : 'transparent', boxSizing: 'border-box' }} 
+1252:                     className={`w-3.5 h-3.5 border border-black flex items-center justify-center font-bold text-[10px] flex-shrink-0 self-center`}
+1264:        <div className="border-t border-x border-black overflow-x-auto mb-2.5">
+1265:          <table className="w-full text-left border-collapse table-fixed min-w-[650px] font-sans text-xs">
+1267:              <tr style={{ backgroundColor: '#f3f4f6', color: '#000000' }} className="font-extrabold border-b border-black text-center text-[10px] md:text-xs">
+1268:                <th className="w-[10%] py-1 px-1 border-r border-black" style={{ color: '#000000', verticalAlign: 'middle' }}>Select | SL</th>
+1269:                <th className="w-[30%] py-1 px-2 border-r border-black text-left" style={{ color: '#000000', verticalAlign: 'middle' }}>EQUIPMENT NAME</th>
+1270:                <th className="w-[30%] py-1 px-2 border-r border-black text-left" style={{ color: '#000000', verticalAlign: 'middle' }}>DESCRIPTION</th>
+1271:                <th className="w-[8%] py-1 px-1 border-r border-black" style={{ color: '#000000', verticalAlign: 'middle' }}>QTY</th>
+1272:                <th className="w-[12%] py-1 px-1 border-r border-black" style={{ color: '#000000', verticalAlign: 'middle' }}>CONDITION</th>
+1286:                    className={`border-b border-black transition-colors ${isActive ? '' : 'opacity-70'} h-[25px]`}
+1289:                    <td className="p-0 border-r border-black text-center align-middle" style={{ color: textColor, verticalAlign: 'middle', height: '25px' }}>
+1302:                              className="inline-flex items-center justify-center border border-black font-sans font-bold text-[7.5px] leading-[10px] text-center flex-shrink-0"
+1313:                    <td className="p-0 border-r border-black font-extrabold text-[11px] md:text-xs text-left align-middle" style={{ color: isActive ? '#000000' : '#4b5563', verticalAlign: 'middle', height: '25px' }}>
+1334:                    <td className="p-0 border-r border-black text-left align-middle" style={{ verticalAlign: 'middle', height: '25px' }}>
+1355:                    <td className="p-0 border-r border-black text-center align-middle" style={{ verticalAlign: 'middle', height: '25px' }}>
+1377:                    <td className="p-0 border-r border-black text-center align-middle" style={{ verticalAlign: 'middle', height: '25px' }}>
+1423:              <tr style={{ backgroundColor: '#f3f4f6', color: '#000000' }} className="font-extrabold text-sm border-b border-black">
+1424:                <td colSpan={5} className="py-1.5 px-3 border-r border-black text-right font-extrabold" style={{ color: '#000000' }}>
+1436:        <div className="border border-black p-2.5 mb-1 font-sans" style={{ color: '#000000' }}>
+1441:            <p style={{ backgroundColor: '#f9fafb', color: '#1f2937', borderColor: '#f3f4f6' }} className="text-xs font-medium leading-relaxed min-h-[72px] p-1.5 rounded border whitespace-pre-line">
+1450:              className="w-full p-1.5 border border-gray-300 rounded focus:border-black outline-none text-xs font-medium bg-transparent"
+1460:          <div className="text-center flex flex-col justify-between h-28 border-t border-black/80 pt-2 min-h-[100px]" style={{ color: '#000000' }}>
+1472:              <p className="font-extrabold text-[10px] border-t border-dashed border-gray-300 pt-0.5" style={{ color: '#000000' }}>Signature</p>
+1478:          <div className="text-center flex flex-col justify-between h-28 border-t border-black/80 pt-2 min-h-[100px]" style={{ color: '#000000' }}>
+1491:              <p className="font-extrabold text-[10px] border-t border-dashed border-gray-300 pt-0.5" style={{ color: '#000000' }}>Signature</p>
+1497:          <div className="text-center flex flex-col justify-between h-28 border-t border-black/80 pt-2 min-h-[100px]" style={{ color: '#000000' }}>
+1510:              <p className="font-extrabold text-[10px] border-t border-dashed border-gray-300 pt-0.5" style={{ color: '#000000' }}>Signature</p>
+1516:          <div className="text-center flex flex-col justify-between h-28 border-t border-black/80 pt-2 min-h-[100px]" style={{ color: '#000000' }}>
+1529:              <p className="font-extrabold text-[10px] border-t border-dashed border-gray-300 pt-0.5" style={{ color: '#000000' }}>Signature</p>

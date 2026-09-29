@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@450;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Top-level high-specificity Print rules (Runs outside normal layer limits of Tailwind CSS v4) */
+@media print {
+  /* Set standard A4 page dimensions and margins */
+  @page {
+    size: A4 portrait;
+    margin: 8mm 12mm 8mm 12mm;
+  }
+
+  /* Robust Screen Element Exclusion Pattern (Removes headers, buttons, guides) */
+  .no-print,
+  button,
+  select,
+  header,
+  aside,
+  nav,
+  footer,
+  [class*="no-print"] {
+    display: none !important;
+  }
+
+  /* Reset all potential scroll wrappers, layout elements, flex boxes to simple printable block flows */
+  html, body, #root, 
+  [class*="min-h-screen"], 
+  [class*="flex"], 
+  [class*="overflow-"], 
+  main,
+  .max-w-4xl,
+  .max-w-7xl {
+    display: block !important;
+    position: static !important;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Frame the printable sheet with proper high fidelity full-width layout */
+  .print-sheet {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: none !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    page-break-inside: auto;
+  }
+
+  /* Prevent page cuts from cutting inside critical lists or signature blocks */
+  tr {
+    page-break-inside: avoid !important;
+    page-break-after: auto !important;
+  }
+  
+  thead {
+    display: table-header-group !important;
+  }
+
+  /* Avoid splitting the signature panel layout across pages */
+  .grid-cols-4, .grid-cols-2 {
+    page-break-inside: avoid !important;
+  }
+
+  /* Forces accurate printing of fine colors, signatures, backgrounds, and borders in modern browsers */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* High contrast colors for print text */
+  .text-black, h1, h2, h3, h4, p, span, label, td, th {
+    color: #000000 !important;
+  }
+
+  /* Ensure background lines and tables render beautifully */
+  .bg-black {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+  }
+
+  .bg-gray-50, .bg-gray-100 {
+    background-color: #f3f4f6 !important;
+  }
+}
+

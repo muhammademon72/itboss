@@ -1,0 +1,6 @@
+{
+  "name": "Equipment Requisition & Asset Handover Platform",
+  "description": "Interactive digital Equipment Requisition System, Asset Acknowledgement Handover Ledger, and Sim Management Ledger corresponding to physical corporate layouts. Features live calculations, print sheet styles, search, and durable Google Firestore database replication for the IT MANAGER IT Department.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
