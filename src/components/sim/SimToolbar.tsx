@@ -30,6 +30,7 @@ interface SimToolbarProps {
   onFilterChange: (filters: FilterOptions) => void;
   onOpenNewForm: () => void;
   onExportCSV: () => void;
+  onExportJSON?: () => void;
   onOpenImport: () => void;
   onResetData?: () => void;
   compactMode?: boolean;
@@ -57,6 +58,7 @@ export const SimToolbar: React.FC<SimToolbarProps> = ({
   onFilterChange,
   onOpenNewForm,
   onExportCSV,
+  onExportJSON,
   onOpenImport,
   onResetData,
   compactMode,
@@ -331,6 +333,18 @@ export const SimToolbar: React.FC<SimToolbarProps> = ({
             <Download className="w-3.5 h-3.5 text-slate-500" />
             <span>Export CSV</span>
           </button>
+
+          {onExportJSON && (
+            <button
+              id="btn-export-json"
+              onClick={onExportJSON}
+              className="px-3 py-2 text-xs font-medium text-indigo-700 bg-indigo-50 border border-indigo-300 rounded-lg hover:bg-indigo-100 shadow-2xs flex items-center gap-1.5 transition-colors cursor-pointer"
+              title="Export all records as JSON file"
+            >
+              <Download className="w-3.5 h-3.5 text-indigo-600" />
+              <span>Export JSON</span>
+            </button>
+          )}
 
           {canEdit && (
             <button

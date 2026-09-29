@@ -48,10 +48,17 @@ export const ImportModal: React.FC<ImportModalProps> = ({
     reader.onload = (event) => {
       try {
         const buffer = event.target?.result;
-        const workbook = XLSX.read(buffer, { type: 'binary' });
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
-        const json: any[] = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+        let json: any[] = [];
+        if (selectedFile.name.endsWith('.json')) {
+          const text = typeof buffer === 'string' ? buffer : new TextDecoder().decode(buffer as ArrayBuffer);
+          const parsed = JSON.parse(text);
+          json = Array.isArray(parsed) ? parsed : (parsed.records || [parsed]);
+        } else {
+          const workbook = XLSX.read(buffer, { type: 'binary' });
+          const sheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[sheetName];
+          json = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+        }
 
         if (json.length === 0) {
           setError('The uploaded file contains no data rows.');
@@ -345,7 +352,7 @@ export const ImportModal: React.FC<ImportModalProps> = ({
               <input
                 ref={fileInputRef}
                 type="file"
-                accept=".xlsx,.xls,.csv"
+                accept=".xlsx,.xls,.csv,.json"
                 onChange={handleFileChange}
                 className="hidden"
               />
@@ -360,7 +367,7 @@ export const ImportModal: React.FC<ImportModalProps> = ({
               ) : (
                 <div>
                   <p className="font-medium text-slate-700">Click to browse or drag and drop file here</p>
-                  <p className="text-xs text-slate-400 mt-1">Supports Excel Workbook (.xlsx) and CSV</p>
+                  <p className="text-xs text-slate-400 mt-1">Supports Excel (.xlsx, .xls), CSV and JSON format</p>
                 </div>
               )}
             </div>

@@ -738,6 +738,22 @@ export const SimManagementLedger: React.FC<SimManagementLedgerProps> = ({
     showToast(`Exported ${sortedRecords.length} records to CSV!`);
   };
 
+  // Export JSON
+  const handleExportJSON = () => {
+    try {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(records, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `SIM_Management_Ledger_Export_${new Date().toISOString().split('T')[0]}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast(`Exported ${records.length} records to JSON successfully!`);
+    } catch (e: any) {
+      showToast("Export JSON error: " + (e.message || String(e)));
+    }
+  };
+
   // Export Selected to CSV
   const handleExportSelected = () => {
     const selectedRecords = records.filter((r) => selectedIds.includes(r.id));
@@ -859,6 +875,7 @@ export const SimManagementLedger: React.FC<SimManagementLedgerProps> = ({
           setIsFormOpen(true);
         }}
         onExportCSV={handleExportCSV}
+        onExportJSON={handleExportJSON}
         onOpenImport={() => setIsImportModalOpen(true)}
         onResetData={() => setIsResetModalOpen(true)}
         compactMode={compactMode}

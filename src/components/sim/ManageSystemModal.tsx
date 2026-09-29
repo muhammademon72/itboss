@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   X,
   Settings,
@@ -14,6 +14,8 @@ import {
   Shield,
   Tag,
   CheckCircle2,
+  Download,
+  Upload,
 } from 'lucide-react';
 
 interface ManageSystemModalProps {
@@ -67,6 +69,57 @@ export const ManageSystemModal: React.FC<ManageSystemModalProps> = ({
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editValue, setEditValue] = useState<string>('');
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const masterFileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleExportMasterJSON = () => {
+    try {
+      const masterData = {
+        branches,
+        operators,
+        departments,
+        designations,
+        simTypes,
+        simOwners,
+        simGroups,
+        statuses,
+      };
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(masterData, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `System_Master_Options_Export_${new Date().toISOString().split('T')[0]}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showSuccess("System Master options exported to JSON successfully!");
+    } catch (e: any) {
+      showSuccess("Export error: " + (e.message || String(e)));
+    }
+  };
+
+  const handleImportMasterJSON = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const text = String(event.target?.result || '');
+        const parsed = JSON.parse(text);
+        if (parsed.branches && Array.isArray(parsed.branches)) setBranches(parsed.branches);
+        if (parsed.operators && Array.isArray(parsed.operators)) setOperators(parsed.operators);
+        if (parsed.departments && Array.isArray(parsed.departments)) setDepartments(parsed.departments);
+        if (parsed.designations && Array.isArray(parsed.designations)) setDesignations(parsed.designations);
+        if (parsed.simTypes && Array.isArray(parsed.simTypes)) setSimTypes(parsed.simTypes);
+        if (parsed.simOwners && Array.isArray(parsed.simOwners)) setSimOwners(parsed.simOwners);
+        if (parsed.simGroups && Array.isArray(parsed.simGroups)) setSimGroups(parsed.simGroups);
+        if (parsed.statuses && Array.isArray(parsed.statuses)) setStatuses(parsed.statuses);
+        showSuccess("System Master options imported successfully!");
+      } catch (err: any) {
+        showSuccess("Error importing JSON: " + (err.message || String(err)));
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  };
 
   if (!isOpen) return null;
 
@@ -396,10 +449,35 @@ export const ManageSystemModal: React.FC<ManageSystemModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0">
-          <span className="text-[11px] text-slate-500 italic">
-            Changes apply instantly to all create, edit, and filter selectors.
-          </span>
+        <div className="px-6 py-3.5 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
+          <div className="flex items-center gap-2">
+            <input
+              type="file"
+              ref={masterFileInputRef}
+              accept=".json"
+              onChange={handleImportMasterJSON}
+              className="hidden"
+            />
+            <button
+              type="button"
+              onClick={() => masterFileInputRef.current?.click()}
+              className="px-3 py-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 rounded-lg shadow-2xs flex items-center gap-1.5 transition-colors cursor-pointer"
+              title="Import Master Lists from JSON"
+            >
+              <Upload className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Import JSON</span>
+            </button>
+            <button
+              type="button"
+              onClick={handleExportMasterJSON}
+              className="px-3 py-1.5 text-xs font-semibold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-300 rounded-lg shadow-2xs flex items-center gap-1.5 transition-colors cursor-pointer"
+              title="Export Master Lists as JSON"
+            >
+              <Download className="w-3.5 h-3.5 text-indigo-600" />
+              <span>Export JSON</span>
+            </button>
+          </div>
+
           <button
             type="button"
             onClick={onClose}
