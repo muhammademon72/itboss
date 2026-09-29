@@ -70,8 +70,17 @@ export default function Dashboard({
   const [errorText, setErrorText] = useState<string | null>(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
+  const canView = isAdmin || permissions?.view !== false;
   const canEdit = isAdmin || permissions?.edit !== false;
   const canDelete = isAdmin || permissions?.delete !== false;
+
+  if (!canView) {
+    return (
+      <div className="flex items-center justify-center h-screen text-slate-500">
+        You do not have permission to view this page.
+      </div>
+    );
+  }
 
   // Load database requisitions live via onSnapshot (Skill requirement)
   useEffect(() => {
