@@ -1270,7 +1270,7 @@ export default function App() {
             </nav>
 
             {/* Storage Cluster Widget */}
-            <StorageCluster />
+            {isAdmin && <StorageCluster />}
 
             {/* Profile Element / Sidebar Footer */}
             <div className="p-4 border-t border-slate-800 bg-slate-955/20">
