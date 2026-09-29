@@ -11,6 +11,7 @@ export interface GenerateSimPdfOptions {
   includeSummary?: boolean;
   filterSummaryText?: string;
   records: SimRecord[];
+  includeInactive?: boolean;
 }
 
 const CANONICAL_COLUMNS_ORDER: SortField[] = [
@@ -42,6 +43,7 @@ export function generateSimReportPdf({
   includeSummary = false,
   filterSummaryText,
   records,
+  includeInactive = false,
 }: GenerateSimPdfOptions): void {
   // Ensure 'sl' is ALWAYS placed first on the left if included, followed by canonical order
   const orderedColumns = [...selectedColumns].sort((a, b) => {
@@ -71,10 +73,9 @@ export function generateSimReportPdf({
   const margin = 12;
 
   // Active records metrics
-  const activeRecords = records.filter((r) => (r.status || 'Active') === 'Active');
-  const inactiveCount = records.length - activeRecords.length;
-  const totalApproved = activeRecords.reduce((sum, r) => sum + (r.monthlyApproved || 0), 0);
-  const totalBill = activeRecords.reduce((sum, r) => sum + (r.paymentBill || 0), 0);
+  const displayRecords = includeInactive ? records : records.filter((r) => (r.status || 'Active') === 'Active');
+  const totalApproved = displayRecords.reduce((sum, r) => sum + (r.monthlyApproved || 0), 0);
+  const totalBill = displayRecords.reduce((sum, r) => sum + (r.paymentBill || 0), 0);
   const netBalance = totalApproved - totalBill;
 
   // Header Box / Branding
@@ -109,7 +110,7 @@ export function generateSimReportPdf({
   doc.text('CORPORATE SIM LEDGER', pageWidth - margin - 44, 11);
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(9);
-  doc.text(`${activeRecords.length} Active SIM Lines`, pageWidth - margin - 44, 18);
+  doc.text(`${displayRecords.length} SIM Lines ${includeInactive ? '' : '(Active)'}`, pageWidth - margin - 44, 18);
 
   let currentY = 33;
 
@@ -125,9 +126,9 @@ export function generateSimReportPdf({
     doc.setFontSize(6.5);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(22, 101, 52);
-    doc.text('ACTIVE SIM LINES', margin + 3, currentY + 4.5);
+    doc.text('SIM LINES', margin + 3, currentY + 4.5);
     doc.setFontSize(9.5);
-    doc.text(`${activeRecords.length} lines`, margin + 3, currentY + 10.5);
+    doc.text(`${displayRecords.length} lines`, margin + 3, currentY + 10.5);
 
     // 2. Approved Budget
     const c2X = margin + cardWidth + 3;
@@ -177,7 +178,7 @@ export function generateSimReportPdf({
 
   const headers = [colDefs.map((c) => c.label)];
 
-  const rows = activeRecords.map((rec, idx) => {
+  const rows = displayRecords.map((rec, idx) => {
     return colDefs.map((c) => {
       switch (c.field) {
         case 'sl':

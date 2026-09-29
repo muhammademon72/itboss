@@ -34,6 +34,7 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
   const [reportTitle, setReportTitle] = useState<string>('Corporate SIM Allocation & Bill Ledger Report');
   const [orientation, setOrientation] = useState<'auto' | 'portrait' | 'landscape'>('auto');
   const [includeSummary, setIncludeSummary] = useState<boolean>(false);
+  const [includeInactive, setIncludeInactive] = useState<boolean>(false);
   const [isExporting, setIsExporting] = useState<boolean>(false);
 
   React.useEffect(() => {
@@ -125,7 +126,8 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
         orientation,
         includeSummary,
         filterSummaryText,
-        records: activeRecords,
+        records,
+        includeInactive,
       });
       if (onApplyTableColumns) {
         onApplyTableColumns(selectedColumns);
@@ -203,6 +205,19 @@ export const PdfExportModal: React.FC<PdfExportModalProps> = ({
                 {inactiveCount} Inactive SIMs বাদ দেওয়া হয়েছে
               </span>
             )}
+          </div>
+
+          {/* Filter options */}
+          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <label className="flex items-center gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={includeInactive}
+                onChange={(e) => setIncludeInactive(e.target.checked)}
+                className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+              />
+              <span className="text-sm font-medium text-slate-700">Include Inactive SIMs (নিষ্ক্রিয় সিম অন্তর্ভুক্ত করুন)</span>
+            </label>
           </div>
 
           {/* Preset Buttons */}

@@ -5,7 +5,7 @@ import { saveLocalCacheItem } from '../utils/localCache';
 import { PurchaseBill, PurchaseBillEntry, CompanyProfile } from '../types';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { Plus, Trash2, FileText, ArrowLeft, Download, CheckCircle, FileSpreadsheet, Upload, Copy, Calendar, Lock, ShieldCheck } from 'lucide-react';
+import { Plus, Trash2, FileText, ArrowLeft, Download, CheckCircle, FileSpreadsheet, Upload, Copy, Calendar, Lock, ShieldCheck, Columns3, X } from 'lucide-react';
 import * as XLSX from 'xlsx';
 
 export const formatDisplayDate = (dateVal: string | undefined): string => {
@@ -140,6 +140,51 @@ export default function PurchaseBillForm({
   const [companyProfile, setCompanyProfile] = useState<CompanyProfile | null>(null);
   const [loadingProfile, setLoadingProfile] = useState(true);
   const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
+
+  const [summaryVisibleColumns, setSummaryVisibleColumns] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem('purchase_bill_summary_visible_columns');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) return parsed;
+      }
+    } catch (e) {}
+    return ['purchaseDate', 'vendor', 'invNo', 'productName', 'serialNo', 'qty', 'price', 'amount', 'branch', 'applicant', 'distDate', 'remarks'];
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('purchase_bill_summary_visible_columns', JSON.stringify(summaryVisibleColumns));
+    } catch (e) {}
+  }, [summaryVisibleColumns]);
+
+  const [isSummaryColDropdownOpen, setIsSummaryColDropdownOpen] = useState(false);
+
+  const SUMMARY_ALL_COLUMNS = [
+    { id: 'purchaseDate', label: 'Purchase Date' },
+    { id: 'vendor', label: 'Vendor Name' },
+    { id: 'invNo', label: 'Inv / Bill No' },
+    { id: 'productName', label: 'Product Name' },
+    { id: 'serialNo', label: 'Serial Number' },
+    { id: 'qty', label: 'QTY' },
+    { id: 'price', label: 'Price' },
+    { id: 'amount', label: 'Amount' },
+    { id: 'branch', label: 'Branch Code' },
+    { id: 'applicant', label: 'Applicant Name' },
+    { id: 'distDate', label: 'Dist. Date' },
+    { id: 'remarks', label: 'Remarks' },
+  ];
+
+  const handleToggleSummaryCol = (colId: string) => {
+    setSummaryVisibleColumns(prev => {
+      if (prev.includes(colId)) {
+        if (prev.length <= 1) return prev;
+        return prev.filter(c => c !== colId);
+      } else {
+        return [...prev, colId];
+      }
+    });
+  };
 
   // Sync state if initialBill updates
   useEffect(() => {
@@ -511,10 +556,13 @@ export default function PurchaseBillForm({
       {/* Top action buttons */}
       <div className="flex justify-between items-center mb-6">
         <button 
-          onClick={onBack}
-          className="flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors"
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            onBack();
+          }}
+          className="flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
         >
-          <ArrowLeft className="w-4 h-4" /> Back to Dashboard
+          <ArrowLeft className="w-4 h-4" /> Back to Previous Position
         </button>
         <div className="flex gap-2">
           {!effectiveReadOnly && (
@@ -618,24 +666,81 @@ export default function PurchaseBillForm({
         </div>
       </div>
 
+      {/* Spreadsheet grid header with Column Filter */}
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Purchase Entries ({entries.length} Items)</h3>
+        
+        {/* Column Filter Dropdown */}
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setIsSummaryColDropdownOpen(!isSummaryColDropdownOpen)}
+            className={`px-3.5 py-1.5 text-xs font-semibold border rounded-lg flex items-center gap-1.5 transition cursor-pointer ${
+              summaryVisibleColumns.length < SUMMARY_ALL_COLUMNS.length
+                ? 'bg-amber-50 text-amber-900 border-amber-300'
+                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+            }`}
+            title="Hide or show summary table columns"
+          >
+            <Columns3 className="w-3.5 h-3.5 text-slate-500" />
+            <span>Columns ({summaryVisibleColumns.length}/{SUMMARY_ALL_COLUMNS.length})</span>
+          </button>
+
+          {isSummaryColDropdownOpen && (
+            <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-slate-200 z-50 p-3 space-y-2 animate-in fade-in zoom-in-95">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                <span className="text-xs font-bold text-slate-800">Column Hide / Show</span>
+                <button onClick={() => setIsSummaryColDropdownOpen(false)} className="text-slate-400 hover:text-slate-600 cursor-pointer">
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="flex justify-between text-[11px] px-1 py-1 bg-slate-50 rounded">
+                <button onClick={() => setSummaryVisibleColumns(SUMMARY_ALL_COLUMNS.map(c => c.id))} className="text-blue-600 font-semibold cursor-pointer">Show All</button>
+                <span className="text-slate-300">|</span>
+                <button onClick={() => setSummaryVisibleColumns(['purchaseDate', 'productName', 'qty', 'amount', 'branch'])} className="text-slate-600 font-medium cursor-pointer">Reset</button>
+              </div>
+              <div className="space-y-1.5 max-h-48 overflow-y-auto text-xs">
+                {SUMMARY_ALL_COLUMNS.map(col => {
+                  const isVisible = summaryVisibleColumns.includes(col.id);
+                  return (
+                    <label
+                      key={col.id}
+                      className="flex items-center justify-between px-2 py-1.5 rounded hover:bg-slate-50 cursor-pointer"
+                    >
+                      <span className="font-medium text-slate-700">{col.label}</span>
+                      <input
+                        type="checkbox"
+                        checked={isVisible}
+                        onChange={() => handleToggleSummaryCol(col.id)}
+                        className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 h-3.5 w-3.5 cursor-pointer"
+                      />
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Spreadsheet grid */}
       <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
         <table className="w-full text-left text-xs whitespace-nowrap min-w-[1200px]">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200 text-slate-600">
               <th className="p-3 font-semibold tracking-wider text-center w-12 border-r border-slate-200">SL</th>
-              <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Purchase Date</th>
-              <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Vendor Name</th>
-              <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Inv / Bill No</th>
-              <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Product Name</th>
-              <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Serial Number</th>
-              <th className="p-3 font-semibold tracking-wider text-center w-16 border-r border-slate-200">QTY</th>
-              <th className="p-3 font-semibold tracking-wider text-right w-24 border-r border-slate-200">Price</th>
-              <th className="p-3 font-semibold tracking-wider text-right w-28 border-r border-slate-200">Amount</th>
-              <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Branch Code</th>
-              <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Applicant Name</th>
-              <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Dist. Date</th>
-              <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Remarks</th>
+              {summaryVisibleColumns.includes('purchaseDate') && <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Purchase Date</th>}
+              {summaryVisibleColumns.includes('vendor') && <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Vendor Name</th>}
+              {summaryVisibleColumns.includes('invNo') && <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Inv / Bill No</th>}
+              {summaryVisibleColumns.includes('productName') && <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Product Name</th>}
+              {summaryVisibleColumns.includes('serialNo') && <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Serial Number</th>}
+              {summaryVisibleColumns.includes('qty') && <th className="p-3 font-semibold tracking-wider text-center w-16 border-r border-slate-200">QTY</th>}
+              {summaryVisibleColumns.includes('price') && <th className="p-3 font-semibold tracking-wider text-right w-24 border-r border-slate-200">Price</th>}
+              {summaryVisibleColumns.includes('amount') && <th className="p-3 font-semibold tracking-wider text-right w-28 border-r border-slate-200">Amount</th>}
+              {summaryVisibleColumns.includes('branch') && <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Branch Code</th>}
+              {summaryVisibleColumns.includes('applicant') && <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Applicant Name</th>}
+              {summaryVisibleColumns.includes('distDate') && <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Dist. Date</th>}
+              {summaryVisibleColumns.includes('remarks') && <th className="p-3 font-semibold tracking-wider border-r border-slate-200">Remarks</th>}
               {!effectiveReadOnly && <th className="p-3 font-semibold tracking-wider text-center w-12">Action</th>}
             </tr>
           </thead>
