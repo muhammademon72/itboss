@@ -341,6 +341,11 @@ export default function PurchaseBillDashboard({
   };
 
   const filtered = bills.filter((b) => {
+    // Hide confirmed bills from non-admin users
+    if (b.status === 'confirmed' && !isAdmin) {
+      return false;
+    }
+
     const queryLower = searchQuery.toLowerCase();
     const matchesSearch =
       (b.date || '').includes(queryLower) ||

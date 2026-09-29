@@ -1033,37 +1033,41 @@ export default function App() {
                 </>
               )}
 
-              <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-2 pt-4 mb-2">Requisition Ledger</div>
-              
-              <button
-                onClick={() => { setView('dashboard'); setSelectedRequisition(undefined); }}
-                className={`flex items-center gap-3 w-full px-3 py-2 text-xs font-semibold text-left cursor-pointer rounded-lg transition-all ${
-                  view === 'dashboard'
-                    ? 'bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 font-bold'
-                    : 'text-slate-400 hover:bg-slate-800/60'
-                }`}
-              >
-                <span className={`w-2 h-2 rounded-full ${view === 'dashboard' ? 'bg-indigo-500' : 'bg-slate-600'}`}></span>
-                Requisitions Log
-              </button>
+              {(isAdmin || hasViewPermission('dashboard')) && (
+                <>
+                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-2 pt-4 mb-2">Requisition Ledger</div>
+                  
+                  <button
+                    onClick={() => { setView('dashboard'); setSelectedRequisition(undefined); }}
+                    className={`flex items-center gap-3 w-full px-3 py-2 text-xs font-semibold text-left cursor-pointer rounded-lg transition-all ${
+                      view === 'dashboard'
+                        ? 'bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 font-bold'
+                        : 'text-slate-400 hover:bg-slate-800/60'
+                    }`}
+                  >
+                    <span className={`w-2 h-2 rounded-full ${view === 'dashboard' ? 'bg-indigo-500' : 'bg-slate-600'}`}></span>
+                    Requisitions Log
+                  </button>
 
-              <button
-                onClick={() => { setSelectedRequisition(undefined); setView('create_form'); }}
-                className={`flex items-center gap-3 w-full px-3 py-2 text-xs font-semibold text-left cursor-pointer rounded-lg transition-all ${
-                  view === 'create_form'
-                    ? 'bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 font-bold'
-                    : 'text-slate-400 hover:bg-slate-800/60'
-                }`}
-              >
-                <span className={`w-2 h-2 rounded-full ${view === 'create_form' ? 'bg-indigo-500' : 'bg-slate-600'}`}></span>
-                New Requisition
-              </button>
+                  <button
+                    onClick={() => { setSelectedRequisition(undefined); setView('create_form'); }}
+                    className={`flex items-center gap-3 w-full px-3 py-2 text-xs font-semibold text-left cursor-pointer rounded-lg transition-all ${
+                      view === 'create_form'
+                        ? 'bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 font-bold'
+                        : 'text-slate-400 hover:bg-slate-800/60'
+                    }`}
+                  >
+                    <span className={`w-2 h-2 rounded-full ${view === 'create_form' ? 'bg-indigo-500' : 'bg-slate-600'}`}></span>
+                    New Requisition
+                  </button>
 
-               {view === 'view_form' && (
-                <div className="flex items-center gap-3 w-full px-3 py-2 bg-indigo-600/10 text-indigo-400 rounded-lg border border-indigo-500/20 text-xs font-semibold cursor-default">
-                  <span className="w-2 h-2 rounded-full bg-indigo-500 shadow-xs"></span>
-                  Inspect Entry
-                </div>
+                   {view === 'view_form' && (
+                    <div className="flex items-center gap-3 w-full px-3 py-2 bg-indigo-600/10 text-indigo-400 rounded-lg border border-indigo-500/20 text-xs font-semibold cursor-default">
+                      <span className="w-2 h-2 rounded-full bg-indigo-500 shadow-xs"></span>
+                      Inspect Entry
+                    </div>
+                  )}
+                </>
               )}
 
               {/* Conditional sections based on individual permissions */}
