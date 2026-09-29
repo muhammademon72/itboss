@@ -591,8 +591,8 @@ export const SimManagementLedger: React.FC<SimManagementLedgerProps> = ({
       saveLocalCacheItem(LOCAL_STORAGE_KEY, updatedRecord);
       showToast(
         newStatus === 'Active'
-          ? `সিম #${record.sl} Active করা হয়েছে (ব্যালেন্স ও PDF রিপোর্টে অন্তর্ভুক্ত)`
-          : `সিম #${record.sl} Inactive করা হয়েছে (বিল বাদ ও PDF থেকে অপসারিত)`
+          ? `SIM #${record.sl} activated successfully (Included in balance & PDF reports)`
+          : `SIM #${record.sl} deactivated (Excluded from bill & PDF reports)`
       );
     } catch (err: any) {
       console.error('Failed to toggle status', err);

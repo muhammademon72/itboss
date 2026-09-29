@@ -311,11 +311,11 @@ export const ImportModal: React.FC<ImportModalProps> = ({
               <h2 className="text-base sm:text-lg font-semibold tracking-tight text-white flex items-center gap-2">
                 Import SIM Ledger from Excel / CSV
                 <span className="text-xs font-normal px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-                  এক্সেল বা সিএসভি থেকে আমদানি
+                  Batch Import
                 </span>
               </h2>
               <p className="text-xs text-slate-300">
-                Upload `.xlsx`, `.xls` or `.csv` files to batch load corporate SIM records
+                Upload `.xlsx`, `.xls`, `.csv` or `.json` files to batch load corporate SIM records
               </p>
             </div>
           </div>
@@ -333,7 +333,7 @@ export const ImportModal: React.FC<ImportModalProps> = ({
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <label className="text-xs font-bold text-slate-700 uppercase tracking-wider">
-                1. Select Spreadsheet File (.xlsx, .xls, .csv)
+                1. Select File (.xlsx, .xls, .csv, .json)
               </label>
               <button
                 type="button"
@@ -341,7 +341,7 @@ export const ImportModal: React.FC<ImportModalProps> = ({
                 className="text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1 cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>Download Sample Template (নমুনা ফাইল ডাউনলোড)</span>
+                <span>Download Sample Template</span>
               </button>
             </div>
 

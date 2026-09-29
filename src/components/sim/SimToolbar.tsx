@@ -166,7 +166,7 @@ export const SimToolbar: React.FC<SimToolbarProps> = ({
                   ? 'bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100 ring-1 ring-amber-200'
                   : 'text-slate-700 bg-white border-slate-300 hover:bg-slate-50'
               }`}
-              title="Hide or show table columns (কলাম হাইড বা শো করুন)"
+              title="Hide or show table columns"
             >
               {activeColumnsCount < totalColumnsCount ? (
                 <EyeOff className="w-3.5 h-3.5 text-amber-600" />
@@ -192,12 +192,9 @@ export const SimToolbar: React.FC<SimToolbarProps> = ({
                     <h4 className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
                       <Eye className="w-3.5 h-3.5 text-blue-600" />
                       <span>Column Hide / Show</span>
-                      <span className="text-[10px] font-normal px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
-                        কলাম হাইড/শো
-                      </span>
                     </h4>
                     <p className="text-[11px] text-slate-500 mt-0.5">
-                      টিক আনচেক করলে কলামটি টেবিল থেকে হাইড হবে
+                      Uncheck to hide columns from table view
                     </p>
                   </div>
                   <button
@@ -218,7 +215,7 @@ export const SimToolbar: React.FC<SimToolbarProps> = ({
                     }}
                     className="text-blue-600 hover:text-blue-800 font-semibold text-[11px] cursor-pointer"
                   >
-                    Show All (সব দেখাও)
+                    Show All
                   </button>
                   <span className="text-slate-200">|</span>
                   <button
@@ -228,7 +225,7 @@ export const SimToolbar: React.FC<SimToolbarProps> = ({
                     }}
                     className="text-slate-600 hover:text-slate-800 font-medium text-[11px] cursor-pointer"
                   >
-                    Reset (রিসেট)
+                    Reset
                   </button>
                   <span className="text-slate-200">|</span>
                   <button
@@ -351,10 +348,10 @@ export const SimToolbar: React.FC<SimToolbarProps> = ({
               id="btn-import-data"
               onClick={onOpenImport}
               className="px-3.5 py-2 text-xs font-semibold text-emerald-700 bg-white hover:bg-emerald-50 border border-emerald-400 rounded-lg shadow-2xs flex items-center gap-1.5 transition-colors cursor-pointer"
-              title="Import SIM data from Excel or CSV file (এক্সেল বা সিএসভি ইমপোর্ট)"
+              title="Import SIM data from Excel, CSV or JSON"
             >
               <Upload className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Import (ইমপোর্ট)</span>
+              <span>Import</span>
             </button>
           )}
 
@@ -365,7 +362,7 @@ export const SimToolbar: React.FC<SimToolbarProps> = ({
               className="px-3.5 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-lg shadow-xs flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <Plus className="w-4 h-4" />
-              <span>Add New SIM (নতুন এন্ট্রি)</span>
+              <span>Add New SIM</span>
             </button>
           )}
         </div>
