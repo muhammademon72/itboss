@@ -201,10 +201,10 @@ export function generateSimReportPdf({
     });
   });
 
-  const totalPaymentBill = activeRecords.reduce((sum, r) => sum + (Number(r.paymentBill) || 0), 0);
-  const totalAdvancePayment = activeRecords.reduce((sum, r) => sum + (Number(r.advancePayment) || 0), 0);
-  const totalMonthlyApproved = activeRecords.reduce((sum, r) => sum + (Number(r.monthlyApproved) || 0), 0);
-  const totalCreditLimit = activeRecords.reduce((sum, r) => sum + (Number(r.creditLimit) || 0), 0);
+  const totalPaymentBill = displayRecords.reduce((sum, r) => sum + (Number(r.paymentBill) || 0), 0);
+  const totalAdvancePayment = displayRecords.reduce((sum, r) => sum + (Number(r.advancePayment) || 0), 0);
+  const totalMonthlyApproved = displayRecords.reduce((sum, r) => sum + (Number(r.monthlyApproved) || 0), 0);
+  const totalCreditLimit = displayRecords.reduce((sum, r) => sum + (Number(r.creditLimit) || 0), 0);
 
   // Table summary footer row (placed right under Payment Bill and numeric columns)
   const footRow = colDefs.map((col, idx) => {
@@ -226,7 +226,7 @@ export function generateSimReportPdf({
       return 'Total Bill:';
     }
     if (idx === 0) {
-      return `Total: ${activeRecords.length}`;
+      return `Total: ${displayRecords.length}`;
     }
     return '';
   });
