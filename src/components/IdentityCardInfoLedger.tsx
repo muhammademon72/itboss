@@ -4,6 +4,8 @@ import { db } from '../firebase';
 import { IdentityCardInfo } from '../types';
 import { Plus, User, Eye, Edit2, Trash2 } from 'lucide-react';
 import { IdentityCardFormModal } from './sim/IdentityCardFormModal';
+import { IdentityCardViewModal } from './sim/IdentityCardViewModal';
+import { ConfirmDeleteModal } from './sim/ConfirmDeleteModal';
 
 interface IdentityCardInfoLedgerProps {
   currentUserUid: string;
@@ -13,6 +15,8 @@ interface IdentityCardInfoLedgerProps {
 export default function IdentityCardInfoLedger({ currentUserUid, isAdmin }: IdentityCardInfoLedgerProps) {
   const [records, setRecords] = useState<IdentityCardInfo[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState<IdentityCardInfo | null>(null);
 
   useEffect(() => {
@@ -33,13 +37,21 @@ export default function IdentityCardInfoLedger({ currentUserUid, isAdmin }: Iden
   };
 
   const handleView = (record: IdentityCardInfo) => {
-    alert(`Name: ${record.employeeName}\nID: ${record.employeeId}\nDept: ${record.department}\nStatus: ${record.status}`);
+    setSelectedRecord(record);
+    setIsViewModalOpen(true);
   };
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this record?')) {
+  const handleDelete = (record: IdentityCardInfo) => {
+    setSelectedRecord(record);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (selectedRecord) {
       try {
-        await deleteDoc(doc(db, 'identityCardInfo', id));
+        await deleteDoc(doc(db, 'identityCardInfo', selectedRecord.id));
+        setIsDeleteModalOpen(false);
+        setSelectedRecord(null);
       } catch (err) {
         console.error('Error deleting record:', err);
         alert('Failed to delete record.');
@@ -120,7 +132,7 @@ export default function IdentityCardInfoLedger({ currentUserUid, isAdmin }: Iden
                     <button 
                       className="text-red-500 hover:text-red-700 p-1 rounded hover:bg-red-50" 
                       title="Delete"
-                      onClick={() => handleDelete(r.id)}
+                      onClick={() => handleDelete(r)}
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -131,6 +143,18 @@ export default function IdentityCardInfoLedger({ currentUserUid, isAdmin }: Iden
           </tbody>
         </table>
       </div>
+      <IdentityCardViewModal
+        isOpen={isViewModalOpen}
+        onClose={() => { setIsViewModalOpen(false); setSelectedRecord(null); }}
+        record={selectedRecord}
+      />
+      <ConfirmDeleteModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => { setIsDeleteModalOpen(false); setSelectedRecord(null); }}
+        onConfirm={confirmDelete}
+        title="Delete Record"
+        message={`Are you sure you want to delete ${selectedRecord?.employeeName}'s information?`}
+      />
       <IdentityCardFormModal 
         isOpen={isModalOpen} 
         onClose={() => { setIsModalOpen(false); setSelectedRecord(null); }} 
