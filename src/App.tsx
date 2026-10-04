@@ -1017,6 +1017,32 @@ export default function App() {
                       Note Book Ledger
                     </button>
                   )}
+                  {(isAdmin || hasViewPermission('purchase_bills')) && (
+                    <button
+                      onClick={() => setView('purchase_bills')}
+                      className={`flex items-center gap-3 w-full px-3 py-2 text-xs font-semibold text-left cursor-pointer rounded-lg transition-all ${
+                        view === 'purchase_bills'
+                          ? 'bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 font-bold'
+                          : 'text-slate-400 hover:bg-slate-800/60'
+                      }`}
+                    >
+                      <FileText className="h-4 w-4 text-indigo-500 shrink-0" />
+                      Purchase Bill
+                    </button>
+                  )}
+                  {(isAdmin || hasViewPermission('money_receipts')) && (
+                    <button
+                      onClick={() => setView('money_receipts')}
+                      className={`flex items-center gap-3 w-full px-3 py-2 text-xs font-semibold text-left cursor-pointer rounded-lg transition-all ${
+                        view === 'money_receipts'
+                          ? 'bg-emerald-600/10 text-emerald-400 border border-emerald-500/20 font-bold'
+                          : 'text-slate-400 hover:bg-slate-800/60'
+                      }`}
+                    >
+                      <ReceiptText className="h-4 w-4 text-emerald-400 shrink-0" />
+                      Money Receipt Generator
+                    </button>
+                  )}
 
                   {hasViewPermission('sim_management') && (
                     <button
@@ -1209,40 +1235,6 @@ export default function App() {
                   >
                     <span className={`w-2 h-2 rounded-full ${view === 'company_profile' ? 'bg-indigo-500' : 'bg-slate-600'}`}></span>
                     Company Profile
-                  </button>
-                </>
-              )}
-
-              {(isAdmin || hasViewPermission('purchase_bills')) && (
-                <>
-                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-2 pt-4 mb-2">Purchase Bill Ledger</div>
-                  <button
-                    onClick={() => setView('purchase_bills')}
-                    className={`flex items-center gap-3 w-full px-3 py-2 text-xs font-semibold text-left cursor-pointer rounded-lg transition-all ${
-                      view === 'purchase_bills'
-                        ? 'bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 font-bold'
-                        : 'text-slate-400 hover:bg-slate-800/60'
-                    }`}
-                  >
-                    <span className={`w-2 h-2 rounded-full ${view === 'purchase_bills' ? 'bg-indigo-500' : 'bg-slate-600'}`}></span>
-                    Purchase Bill
-                  </button>
-                </>
-              )}
-
-              {(isAdmin || hasViewPermission('money_receipts')) && (
-                <>
-                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-2 pt-4 mb-2">Money Receipt Ledger</div>
-                  <button
-                    onClick={() => setView('money_receipts')}
-                    className={`flex items-center gap-3 w-full px-3 py-2 text-xs font-semibold text-left cursor-pointer rounded-lg transition-all ${
-                      view === 'money_receipts'
-                        ? 'bg-emerald-600/10 text-emerald-400 border border-emerald-500/20 font-bold'
-                        : 'text-slate-400 hover:bg-slate-800/60'
-                    }`}
-                  >
-                    <ReceiptText className="h-4 w-4 text-emerald-400 shrink-0" />
-                    Money Receipt Generator
                   </button>
                 </>
               )}
