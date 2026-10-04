@@ -159,7 +159,8 @@ export const MoneyReceiptLedger: React.FC<MoneyReceiptLedgerProps> = ({
       date: new Date().toISOString().split('T')[0],
       status: 'Paid',
     };
-    handleSaveReceipt(duplicated);
+    setEditingReceipt(duplicated);
+    setIsFormOpen(true);
   };
 
   // Edit Receipt
