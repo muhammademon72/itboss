@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Receipt } from '../types';
 import { formatCurrency } from '../utils/receiptUtils';
 import { Printer, Download, Edit2, Copy, Trash2, X, Check } from 'lucide-react';
-import html2canvas from 'html2canvas';
+import { generateCanvasWithOklchFallback } from '../utils/pdfExport';
 import jsPDF from 'jspdf';
 
 interface ReceiptCardProps {
@@ -35,7 +35,7 @@ export const ReceiptCard: React.FC<ReceiptCardProps> = ({
     if (!receiptRef.current || isDownloading) return;
     setIsDownloading(true);
     try {
-      const canvas = await html2canvas(receiptRef.current, {
+      const canvas = await generateCanvasWithOklchFallback(receiptRef.current, {
         scale: 2.5,
         useCORS: true,
         logging: false,

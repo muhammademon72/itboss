@@ -12,7 +12,7 @@ import {
   Filter, Sparkles, Key, Radio, MapPin, Settings, CopyPlus, Camera
 } from 'lucide-react';
 import * as XLSX from 'xlsx';
-import html2canvas from 'html2canvas';
+import { generateCanvasWithOklchFallback } from '../utils/pdfExport';
 
 interface IspInformationLedgerProps {
   currentUser: any;
@@ -506,39 +506,11 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
   const handleCopyScreenshot = async () => {
     if (!reportPrintRef.current) return;
     try {
-      const canvas = await html2canvas(reportPrintRef.current, {
+      const canvas = await generateCanvasWithOklchFallback(reportPrintRef.current, {
         scale: 2,
         backgroundColor: '#0b1120',
         logging: false,
         useCORS: true,
-        onclone: (clonedDoc) => {
-          try {
-            const styleTags = clonedDoc.querySelectorAll('style');
-            styleTags.forEach(tag => {
-              if (tag.textContent && (tag.textContent.includes('oklch') || tag.textContent.includes('oklab'))) {
-                tag.textContent = tag.textContent
-                  .replace(/oklch\([^)]*\)/g, '#1e293b')
-                  .replace(/oklab\([^)]*\)/g, '#1e293b');
-              }
-            });
-            for (let i = 0; i < clonedDoc.styleSheets.length; i++) {
-              const sheet = clonedDoc.styleSheets[i] as CSSStyleSheet;
-              try {
-                const rules = sheet.cssRules;
-                for (let j = rules.length - 1; j >= 0; j--) {
-                  const text = rules[j].cssText;
-                  if (text.includes('oklch') || text.includes('oklab')) {
-                    sheet.deleteRule(j);
-                  }
-                }
-              } catch (e) {
-                // ignore cross-origin
-              }
-            }
-          } catch (e) {
-            console.warn("Stylesheet sanitization note:", e);
-          }
-        }
       });
 
       canvas.toBlob(async (blob) => {
@@ -950,19 +922,6 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
                             <Edit2 className="w-4 h-4" />
                           </button>
                         )}
-
-                        {/* Quick Copy PPPOE or IP */}
-                        <button
-                          onClick={() => handleCopy(r.pppoeUser || r.ipAddress || r.userName, `row-${r.id}`)}
-                          className="p-1.5 text-slate-500 hover:bg-slate-100 rounded-lg transition cursor-pointer"
-                          title="Copy Username / IP"
-                        >
-                          {copiedField === `row-${r.id}` ? (
-                            <Check className="w-4 h-4 text-emerald-600" />
-                          ) : (
-                            <Copy className="w-4 h-4" />
-                          )}
-                        </button>
 
                         {/* Delete Button */}
                         {canDelete && (

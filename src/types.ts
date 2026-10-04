@@ -488,6 +488,21 @@ export const ALL_COLUMNS: ColumnDefinition[] = [
   { field: 'status', label: 'Status', bnLabel: 'স্ট্যাটাস', minWidth: 'w-28', align: 'center' },
 ];
 
+export interface IdentityCardInfo {
+  id: string;
+  sl: number;
+  branchCode: string;
+  employeeName: string;
+  designation: string;
+  department: string;
+  employeeId: string;
+  joiningDate: string;
+  bloodGroup: string;
+  dob: string;
+  proximityCardNumber: string;
+  status: 'Active' | 'Inactive';
+}
+
 export interface NotesLedgerEntry {
   id: string;
   category: string;
