@@ -553,8 +553,7 @@ export default function App() {
         cleanInput === 'muhammademon72' ||
         cleanInput === 'muhammademon72@gmail.com' ||
         cleanInput === 'root' ||
-        cleanInput === 'superadmin' ||
-        loginPassword === 'admin123';
+        cleanInput === 'superadmin';
 
       if (isAdminIdentifier) {
         const targetEmail = cleanInput.includes('@') ? cleanInput : 'muhammademon72@gmail.com';
@@ -599,12 +598,18 @@ export default function App() {
       }
 
       if (authSucceeded) {
-        return;
+        if (matchedData && matchedData.password && matchedData.password !== loginPassword) {
+           await signOut(auth);
+           authSucceeded = false;
+           console.warn("Auth override: Firebase password differed from Firestore password.");
+        } else {
+          return;
+        }
       }
 
       // Step 3: Match against Firestore user profile
       if (matchedData) {
-        const passwordMatches = !matchedData.password || matchedData.password === loginPassword || loginPassword === 'admin123' || matchedData.role === 'admin';
+        const passwordMatches = matchedData.password === loginPassword;
         
         if (passwordMatches) {
           const isUserAdmin = matchedData.role === 'admin' || cleanInput.includes('admin') || cleanInput.includes('emon');

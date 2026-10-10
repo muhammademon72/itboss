@@ -5,7 +5,7 @@ import { IdentityCardInfo } from '../types';
 import { Plus, User, Eye, Edit2, Trash2 } from 'lucide-react';
 import { IdentityCardFormModal } from './sim/IdentityCardFormModal';
 import { IdentityCardViewModal } from './sim/IdentityCardViewModal';
-import { ConfirmDeleteModal } from './sim/ConfirmDeleteModal';
+import { ConfirmDeleteModal } from './ConfirmDeleteModal';
 
 interface IdentityCardInfoLedgerProps {
   currentUserUid: string;

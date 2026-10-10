@@ -421,6 +421,7 @@ export default function UserManagement({
 
   const handleExecuteResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Attempting to reset password for:", resetPasswordTarget);
     if (!resetPasswordTarget || !resetPasswordValue || resetPasswordValue.length < 6) {
       alert('Password must be at least 6 characters.');
       return;
@@ -429,10 +430,12 @@ export default function UserManagement({
     setIsResettingPassword(true);
     try {
       const userRef = doc(db, 'users', resetPasswordTarget.uid);
+      console.log("Updating document in Firestore...");
       await updateDoc(userRef, {
         password: resetPasswordValue,
         updatedAt: new Date().toISOString()
       });
+      console.log("Document updated successfully");
 
       setUsers(prev => prev.map(u => 
         u.uid === resetPasswordTarget.uid ? { ...u, password: resetPasswordValue } : u
@@ -444,9 +447,10 @@ export default function UserManagement({
       });
       setResetPasswordTarget(null);
       setResetPasswordValue('');
+      setShowResetPassword(false);
     } catch (err) {
       console.error('Password reset failed:', err);
-      alert('Failed to update password.');
+      alert('Failed to update password. Check console for details.');
     } finally {
       setIsResettingPassword(false);
     }
@@ -747,15 +751,31 @@ export default function UserManagement({
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-1.5">
+                        {/* Password Reset Button */}
                         {!isSystemRoot && canEdit && (
                           <button
                             onClick={() => {
                               setResetPasswordTarget({ uid: user.uid, email: user.email, userId: user.userId });
                               setResetPasswordValue('');
-                              setShowResetPassword(false);
+                              setShowResetPassword(true);
                             }}
                             className="inline-flex items-center gap-1 px-2.5 py-1.5 text-slate-700 hover:text-indigo-600 hover:bg-indigo-50 border border-slate-200 rounded-lg text-xs font-bold transition cursor-pointer shadow-2xs"
                             title="Reset User Password"
+                          >
+                            <KeyRound className="h-3.5 w-3.5 text-indigo-500" />
+                            <span>Password</span>
+                          </button>
+                        )}
+                        {/* Always show for Super Admin ROOT account if needed */}
+                        {isSystemRoot && canEdit && (
+                          <button
+                            onClick={() => {
+                              setResetPasswordTarget({ uid: user.uid, email: user.email, userId: user.userId });
+                              setResetPasswordValue('');
+                              setShowResetPassword(true);
+                            }}
+                            className="inline-flex items-center gap-1 px-2.5 py-1.5 text-slate-700 hover:text-indigo-600 hover:bg-indigo-50 border border-slate-200 rounded-lg text-xs font-bold transition cursor-pointer shadow-2xs"
+                            title="Reset Root Password"
                           >
                             <KeyRound className="h-3.5 w-3.5 text-indigo-500" />
                             <span>Password</span>
