@@ -1511,7 +1511,7 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/80 backdrop-blur-sm overflow-y-auto animate-in fade-in duration-150">
           <div
             ref={reportPrintRef}
-            className="bg-[#0b1120] text-slate-200 rounded-3xl max-w-4xl w-full border border-slate-800 shadow-2xl p-5 sm:p-7 my-6 relative overflow-hidden animate-in zoom-in-95 duration-150"
+            className="bg-[#0b1120] text-slate-200 rounded-3xl max-w-6xl w-full border border-slate-800 shadow-2xl p-6 sm:p-8 my-6 relative overflow-hidden animate-in zoom-in-95 duration-150"
           >
             {/* Header: Matches Photo 2 */}
             <div className="flex items-start justify-between gap-4 mb-6">
@@ -1575,71 +1575,71 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
               </div>
             </div>
 
-            {/* Bento Grid: 6 Boxes Horizontal Layout (3 columns) */}
+            {/* Bento Grid: 6 Boxes Horizontal Landscape Layout (3 columns) */}
             <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {/* 1. Client & ISP Details */}
                 <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 text-left">
                   <h3 className="text-cyan-400 font-bold text-sm tracking-wide border-b border-cyan-500/20 pb-2.5 mb-3.5">Client & ISP Details</h3>
-                  <div className="space-y-2 text-xs">
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">User Name:</span><span className="font-semibold text-white text-left">{viewingRecord.userName || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">User Address:</span><span className="font-medium text-slate-200 text-left">{viewingRecord.address || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">User Location:</span><span className="font-medium text-slate-200 text-left">{viewingRecord.locationName || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">Contact Number:</span><span className="font-mono text-slate-200 text-left">{viewingRecord.contactNumber || '-'}</span></div>
+                  <div className="space-y-2.5 text-xs">
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0">User Name:</span><span className="font-semibold text-white text-right">{viewingRecord.userName || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0">User Address:</span><span className="font-medium text-slate-200 text-right">{viewingRecord.address || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0">User Location:</span><span className="font-medium text-slate-200 text-right">{viewingRecord.locationName || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0">Contact Number:</span><span className="font-mono text-slate-200 text-right">{viewingRecord.contactNumber || '-'}</span></div>
                   </div>
                 </div>
 
                 {/* 2. ISP Details */}
                 <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 text-left">
                   <h3 className="text-blue-400 font-bold text-sm tracking-wide border-b border-blue-500/20 pb-2.5 mb-3.5">ISP Details</h3>
-                  <div className="space-y-2 text-xs">
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">ISP Name:</span><span className="font-semibold text-white text-left">{viewingRecord.ispName || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">ISP Address:</span><span className="font-medium text-slate-200 text-left">{viewingRecord.ispAddress || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">Contact Person:</span><span className="font-medium text-emerald-400 text-left">{viewingRecord.contactPersonName || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">ISP Contact Number:</span><span className="font-mono text-slate-200 text-left">{viewingRecord.ispContactNumber || '-'}</span></div>
+                  <div className="space-y-2.5 text-xs">
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0">ISP Name:</span><span className="font-semibold text-white text-right">{viewingRecord.ispName || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0">ISP Address:</span><span className="font-medium text-slate-200 text-right">{viewingRecord.ispAddress || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0">Contact Person:</span><span className="font-medium text-emerald-400 text-right">{viewingRecord.contactPersonName || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0">ISP Contact Number:</span><span className="font-mono text-slate-200 text-right">{viewingRecord.ispContactNumber || '-'}</span></div>
                   </div>
                 </div>
 
                 {/* 3. PPPOE Account & Payment */}
                 <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 text-left">
                   <h3 className="text-indigo-400 font-bold text-sm tracking-wide border-b border-indigo-500/20 pb-2.5 mb-3.5">PPPOE Account & Payment</h3>
-                  <div className="space-y-2 text-xs">
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">PPPEO USER:</span><span className="font-mono font-bold text-emerald-400 text-left">{viewingRecord.pppoeUser || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">PPPEO Password:</span><span className="font-mono text-slate-200 text-left">{viewingRecord.pppoePassword || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">PAYMENT ID:</span><span className="font-mono font-bold text-cyan-400 text-left">{viewingRecord.paymentId || '-'}</span></div>
+                  <div className="space-y-2.5 text-xs">
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0">PPPEO USER:</span><span className="font-mono font-bold text-emerald-400 text-right">{viewingRecord.pppoeUser || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0">PPPEO Password:</span><span className="font-mono text-slate-200 text-right">{viewingRecord.pppoePassword || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0">PAYMENT ID:</span><span className="font-mono font-bold text-cyan-400 text-right">{viewingRecord.paymentId || '-'}</span></div>
                   </div>
                 </div>
 
                 {/* 4. IP Address & DNS Routing */}
                 <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 text-left">
                   <h3 className="text-emerald-400 font-bold text-sm tracking-wide border-b border-emerald-500/20 pb-2.5 mb-3.5">IP Address & DNS Routing</h3>
-                  <div className="space-y-1.5 text-xs font-mono">
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">IP Address:</span><span className="text-slate-200 text-left">{viewingRecord.ipAddress || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">Subnet Mask:</span><span className="text-slate-200 text-left">{viewingRecord.subnetMask || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">Gateway Route:</span><span className="text-slate-200 text-left">{viewingRecord.gateway || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">DNS-1 Server:</span><span className="text-cyan-400 text-left">{viewingRecord.dns1 || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">DNS-2 Server:</span><span className="text-cyan-400 text-left">{viewingRecord.dns2 || '-'}</span></div>
+                  <div className="space-y-2 text-xs font-mono">
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0 font-sans">IP Address:</span><span className="text-slate-200 text-right">{viewingRecord.ipAddress || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0 font-sans">Subnet Mask:</span><span className="text-slate-200 text-right">{viewingRecord.subnetMask || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0 font-sans">Gateway Route:</span><span className="text-slate-200 text-right">{viewingRecord.gateway || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0 font-sans">DNS-1 Server:</span><span className="text-cyan-400 text-right">{viewingRecord.dns1 || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0 font-sans">DNS-2 Server:</span><span className="text-cyan-400 text-right">{viewingRecord.dns2 || '-'}</span></div>
                   </div>
                 </div>
 
                 {/* 5. Router Access */}
                 <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 text-left">
                   <h3 className="text-emerald-400 font-bold text-sm tracking-wide border-b border-emerald-500/20 pb-2.5 mb-3.5">Router Access</h3>
-                  <div className="space-y-2 text-xs font-mono">
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">Port Number:</span><span className="font-bold text-emerald-400 text-left">{viewingRecord.port || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">Router User:</span><span className="text-slate-200 text-left">{viewingRecord.routerUser || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">Router Password:</span><span className="text-slate-200 text-left">{viewingRecord.routerPassword || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">User Role:</span><span className="text-slate-200 text-left">Admin</span></div>
+                  <div className="space-y-2.5 text-xs font-mono">
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0 font-sans">Port Number:</span><span className="font-bold text-emerald-400 text-right">{viewingRecord.port || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0 font-sans">Router User:</span><span className="text-slate-200 text-right">{viewingRecord.routerUser || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0 font-sans">Router Password:</span><span className="text-slate-200 text-right">{viewingRecord.routerPassword || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0 font-sans">User Role:</span><span className="text-slate-200 text-right">Admin</span></div>
                   </div>
                 </div>
 
                 {/* 6. Package & Monthly Bill Details */}
                 <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 text-left">
                   <h3 className="text-amber-400 font-bold text-sm tracking-wide border-b border-amber-500/30 pb-2.5 mb-3.5">Package & Monthly Bill Details</h3>
-                  <div className="space-y-2 text-xs">
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">PACKAGE NAME:</span><span className="font-bold text-white text-left">{viewingRecord.packageName || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">BANDWIDTH SPEED:</span><span className="font-bold text-white text-left">{viewingRecord.bandwidth || '-'}</span></div>
-                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">MONTHLY BILL:</span><span className="font-bold text-emerald-400 text-left">৳ {viewingRecord.billAmount ? Number(viewingRecord.billAmount).toLocaleString() : '0'}</span></div>
+                  <div className="space-y-2.5 text-xs">
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0">PACKAGE NAME:</span><span className="font-bold text-white text-right">{viewingRecord.packageName || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0">BANDWIDTH SPEED:</span><span className="font-bold text-white text-right">{viewingRecord.bandwidth || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0">MONTHLY BILL:</span><span className="font-bold text-emerald-400 text-right">৳ {viewingRecord.billAmount ? Number(viewingRecord.billAmount).toLocaleString() : '0'}</span></div>
                   </div>
                 </div>
               </div>
