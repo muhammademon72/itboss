@@ -29,10 +29,13 @@ export interface IspConnection {
   id: string;
   // 1. আইএসপি ও গ্রাহক পরিচিতি / ISP & CLIENT INFORMATION
   userName: string;
+  address: string;
   locationName: string;
   ispName: string;
+  ispAddress: string;
   contactPersonName: string;
   contactNumber: string;
+  ispContactNumber: string;
   isActive: boolean;
 
   // 2. পিপিপিও ইউজার ও পেমেন্ট তথ্য / PPPOE & PAYMENT AUTHENTICATION

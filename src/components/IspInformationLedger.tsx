@@ -104,12 +104,15 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
 
   // Form Field States
   const [userName, setUserName] = useState('');
+  const [address, setAddress] = useState('');
   const [locationName, setLocationName] = useState('');
   
   const [ispName, setIspName] = useState('');
+  const [ispAddress, setIspAddress] = useState('');
 
   const [contactPersonName, setContactPersonName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
+  const [ispContactNumber, setIspContactNumber] = useState('');
   const [isActive, setIsActive] = useState(true);
 
   const [pppoeUser, setPppoeUser] = useState('');
@@ -163,10 +166,13 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
               list.push({
                 id: docSnap.id,
                 userName: data.userName || '',
+                address: data.address || '',
                 locationName: data.locationName || '',
                 ispName: data.ispName || '',
+                ispAddress: data.ispAddress || '',
                 contactPersonName: data.contactPersonName || '',
                 contactNumber: data.contactNumber || '',
+                ispContactNumber: data.ispContactNumber || '',
                 isActive: data.isActive !== false,
                 pppoeUser: data.pppoeUser || '',
                 pppoePassword: data.pppoePassword || '',
@@ -264,10 +270,13 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
   const handleOpenCreate = () => {
     setEditingRecord(null);
     setUserName('');
+    setAddress('');
     setLocationName('');
     setIspName('');
+    setIspAddress('');
     setContactPersonName('');
     setContactNumber('');
+    setIspContactNumber('');
     setIsActive(true);
     setPppoeUser('');
     setPppoePassword('');
@@ -291,10 +300,13 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
     setViewingRecord(null);
     setEditingRecord(record);
     setUserName(record.userName || '');
+    setAddress(record.address || '');
     setLocationName(record.locationName || '');
     setIspName(record.ispName || '');
+    setIspAddress(record.ispAddress || '');
     setContactPersonName(record.contactPersonName || '');
     setContactNumber(record.contactNumber || '');
+    setIspContactNumber(record.ispContactNumber || '');
     setIsActive(record.isActive !== false);
     setPppoeUser(record.pppoeUser || '');
     setPppoePassword(record.pppoePassword || '');
@@ -319,10 +331,13 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
 
     const payload: Omit<IspConnection, 'id'> = {
       userName: userName.trim(),
+      address: address.trim(),
       locationName: locationName.trim(),
       ispName: ispName.trim(),
+      ispAddress: ispAddress.trim(),
       contactPersonName: contactPersonName.trim(),
       contactNumber: contactNumber.trim(),
+      ispContactNumber: ispContactNumber.trim(),
       isActive,
       pppoeUser: pppoeUser.trim(),
       pppoePassword: pppoePassword.trim(),
@@ -470,10 +485,13 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
     const data = filteredRecords.map((r, idx) => ({
       'SL': idx + 1,
       'User Name / Client': r.userName || '-',
+      'Address': r.address || '-',
       'Location': r.locationName || '-',
       'ISP Name': r.ispName || '-',
+      'ISP Address': r.ispAddress || '-',
       'Contact Person': r.contactPersonName || '-',
       'Contact Number': r.contactNumber || '-',
+      'ISP Contact Number': r.ispContactNumber || '-',
       'Status': r.isActive !== false ? 'Active' : 'Inactive',
       'PPPOE User': r.pppoeUser || '-',
       'PPPOE Password': r.pppoePassword || '-',
@@ -614,10 +632,13 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
                     for (const row of data) {
                       const newRecord = {
                         userName: row['User Name / Client'] || '',
+                        address: row['Address'] || '',
                         locationName: row['Location'] || '',
                         ispName: row['ISP Name'] || '',
+                        ispAddress: row['ISP Address'] || '',
                         contactPersonName: row['Contact Person'] || '',
                         contactNumber: row['Contact Number'] || '',
+                        ispContactNumber: row['ISP Contact Number'] || '',
                         isActive: row['Status'] !== 'Inactive',
                         pppoeUser: row['PPPOE User'] || '',
                         pppoePassword: row['PPPOE Password'] || '',
@@ -790,10 +811,10 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
               <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold tracking-wider uppercase text-[10px]">
                 <th className="py-3 px-4 w-12 text-center">#</th>
                 <th className="py-3 px-4">User Name / Client</th>
+                <th className="py-3 px-4">User Address</th>
                 <th className="py-3 px-4">Location</th>
                 <th className="py-3 px-4">ISP Name</th>
-                <th className="py-3 px-4">PPPOE User</th>
-                <th className="py-3 px-4">IP Address</th>
+                <th className="py-3 px-4">ISP Address</th>
                 <th className="py-3 px-4">Package & Speed</th>
                 <th className="py-3 px-4 text-right">Monthly Bill</th>
                 <th className="py-3 px-4 text-center">Status</th>
@@ -837,6 +858,11 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
                       </div>
                     </td>
 
+                    {/* Address */}
+                    <td className="py-3 px-4 text-slate-600">
+                      <div className="truncate max-w-[160px]">{r.address || '-'}</div>
+                    </td>
+
                     {/* Location */}
                     <td className="py-3 px-4 text-slate-600">
                       <div className="flex items-center gap-1.5">
@@ -852,14 +878,9 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
                       </span>
                     </td>
 
-                    {/* PPPOE User */}
-                    <td className="py-3 px-4 font-mono text-emerald-600 font-semibold">
-                      {r.pppoeUser || '-'}
-                    </td>
-
-                    {/* IP Address */}
-                    <td className="py-3 px-4 font-mono text-slate-600">
-                      {r.ipAddress || '-'}
+                    {/* ISP Address */}
+                    <td className="py-3 px-4 text-slate-600">
+                      <div className="truncate max-w-[160px]">{r.ispAddress || '-'}</div>
                     </td>
 
                     {/* Package & Speed */}
@@ -1017,6 +1038,36 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
                     />
                   </div>
 
+                  {/* Address */}
+                  <div>
+                    <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 mb-1">
+                      <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                      <span>User Address</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ex. House 12, Road 5, Dhaka"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                    />
+                  </div>
+
+                  {/* Contact Number */}
+                  <div>
+                    <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 mb-1">
+                      <Phone className="w-3.5 h-3.5 text-slate-400" />
+                      <span>Contact Number</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ex. +88017XXXXXXXX"
+                      value={contactNumber}
+                      onChange={(e) => setContactNumber(e.target.value)}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                    />
+                  </div>
+
                   {/* Location Name with Manual Toggle */}
                   <div>
                     <div className="flex items-center justify-between mb-1">
@@ -1085,6 +1136,21 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
                       </select>
                   </div>
 
+                  {/* ISP Address */}
+                  <div>
+                    <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 mb-1">
+                      <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                      <span>ISP Address</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ex. Road 1, Block A, Dhaka"
+                      value={ispAddress}
+                      onChange={(e) => setIspAddress(e.target.value)}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                    />
+                  </div>
+
                   {/* Contact Person Name */}
                   <div>
                     <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 mb-1">
@@ -1100,17 +1166,17 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
                     />
                   </div>
 
-                  {/* Contact Number */}
+                  {/* ISP Contact Number */}
                   <div>
                     <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 mb-1">
                       <Phone className="w-3.5 h-3.5 text-slate-400" />
-                      <span>Contact Number</span>
+                      <span>ISP Contact Number</span>
                     </label>
                     <input
                       type="text"
                       placeholder="Ex. +88017XXXXXXXX"
-                      value={contactNumber}
-                      onChange={(e) => setContactNumber(e.target.value)}
+                      value={ispContactNumber}
+                      onChange={(e) => setIspContactNumber(e.target.value)}
                       className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
                     />
                   </div>
@@ -1509,158 +1575,71 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
               </div>
             </div>
 
-            {/* Bento Grid: Exactly 5 Cards matching Photo 2 */}
+            {/* Bento Grid: 6 Boxes Horizontal Layout (3 columns) */}
             <div className="space-y-4">
-              {/* Row 1: 3 Columns */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* Card 1 (Top Left): Client & ISP Details */}
-                <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-cyan-400 font-bold text-sm tracking-wide border-b border-cyan-500/20 pb-2.5 mb-3.5">
-                      Client & ISP Details
-                    </h3>
-                    <div className="space-y-2 text-xs">
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="text-slate-400">User Name:</span>
-                        <span className="font-semibold text-white text-right">{viewingRecord.userName || '-'}</span>
-                      </div>
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="text-slate-400">Location Name:</span>
-                        <span className="font-medium text-slate-200 text-right">{viewingRecord.locationName || '-'}</span>
-                      </div>
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="text-slate-400">ISP Name:</span>
-                        <span className="font-semibold text-white text-right">{viewingRecord.ispName || '-'}</span>
-                      </div>
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="text-slate-400">Contact Person:</span>
-                        <span className="font-medium text-emerald-400 text-right">{viewingRecord.contactPersonName || '-'}</span>
-                      </div>
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="text-slate-400">Contact Number:</span>
-                        <span className="font-mono text-slate-200 text-right">{viewingRecord.contactNumber || '-'}</span>
-                      </div>
-                    </div>
+                {/* 1. Client & ISP Details */}
+                <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 text-left">
+                  <h3 className="text-cyan-400 font-bold text-sm tracking-wide border-b border-cyan-500/20 pb-2.5 mb-3.5">Client & ISP Details</h3>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">User Name:</span><span className="font-semibold text-white text-left">{viewingRecord.userName || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">User Address:</span><span className="font-medium text-slate-200 text-left">{viewingRecord.address || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">User Location:</span><span className="font-medium text-slate-200 text-left">{viewingRecord.locationName || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">Contact Number:</span><span className="font-mono text-slate-200 text-left">{viewingRecord.contactNumber || '-'}</span></div>
                   </div>
                 </div>
 
-                {/* Card 2 (Top Middle): PPPOE Account & Payment */}
-                <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-indigo-400 font-bold text-sm tracking-wide border-b border-indigo-500/20 pb-2.5 mb-3.5">
-                      PPPOE Account & Payment
-                    </h3>
-                    <div className="space-y-2 text-xs">
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="text-slate-400">PPPEO USER:</span>
-                        <span className="font-mono font-bold text-emerald-400 text-right">{viewingRecord.pppoeUser || '-'}</span>
-                      </div>
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="text-slate-400">PPPEO Password:</span>
-                        <span className="font-mono text-slate-200 text-right">{viewingRecord.pppoePassword || '-'}</span>
-                      </div>
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="text-slate-400">PAYMENT ID:</span>
-                        <span className="font-mono font-bold text-cyan-400 text-right">{viewingRecord.paymentId || '-'}</span>
-                      </div>
-                    </div>
+                {/* 2. ISP Details */}
+                <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 text-left">
+                  <h3 className="text-blue-400 font-bold text-sm tracking-wide border-b border-blue-500/20 pb-2.5 mb-3.5">ISP Details</h3>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">ISP Name:</span><span className="font-semibold text-white text-left">{viewingRecord.ispName || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">ISP Address:</span><span className="font-medium text-slate-200 text-left">{viewingRecord.ispAddress || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">Contact Person:</span><span className="font-medium text-emerald-400 text-left">{viewingRecord.contactPersonName || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">ISP Contact Number:</span><span className="font-mono text-slate-200 text-left">{viewingRecord.ispContactNumber || '-'}</span></div>
                   </div>
                 </div>
 
-                {/* Card 3 (Top Right): IP Address & DNS Routing */}
-                <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-emerald-400 font-bold text-sm tracking-wide border-b border-emerald-500/20 pb-2.5 mb-3.5">
-                      IP Address & DNS Routing
-                    </h3>
-                    <div className="space-y-1.5 text-xs font-mono">
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="text-slate-400 font-sans">IP Address:</span>
-                        <span className="text-slate-200 text-right">{viewingRecord.ipAddress || '-'}</span>
-                      </div>
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="text-slate-400 font-sans">Subnet Mask:</span>
-                        <span className="text-slate-200 text-right">{viewingRecord.subnetMask || '-'}</span>
-                      </div>
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="text-slate-400 font-sans">Gateway Route:</span>
-                        <span className="text-slate-200 text-right">{viewingRecord.gateway || '-'}</span>
-                      </div>
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="text-slate-400 font-sans">DNS-1 Server:</span>
-                        <span className="text-cyan-400 text-right">{viewingRecord.dns1 || '-'}</span>
-                      </div>
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="text-slate-400 font-sans">DNS-2 Server:</span>
-                        <span className="text-cyan-400 text-right">{viewingRecord.dns2 || '-'}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Row 2: 2 Columns (Router Access + Package & Monthly bill) */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-                {/* Card 4 (Bottom Left): Router Access - 4 cols */}
-                <div className="md:col-span-4 rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-emerald-400 font-bold text-sm tracking-wide border-b border-emerald-500/20 pb-2.5 mb-3.5">
-                      Router Access
-                    </h3>
-                    <div className="space-y-2 text-xs font-mono">
-                      <div className="flex justify-between items-center gap-2">
-                        <span className="text-slate-400 font-sans">Port:</span>
-                        <span className="font-bold text-emerald-400">{viewingRecord.port || '-'}</span>
-                      </div>
-                      <div className="flex justify-between items-center gap-2">
-                        <span className="text-slate-400 font-sans">Router User:</span>
-                        <span className="text-slate-200">{viewingRecord.routerUser || '-'}</span>
-                      </div>
-                      <div className="flex justify-between items-center gap-2">
-                        <span className="text-slate-400 font-sans">Router Password:</span>
-                        <span className="text-slate-200">{viewingRecord.routerPassword || '-'}</span>
-                      </div>
-                    </div>
+                {/* 3. PPPOE Account & Payment */}
+                <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 text-left">
+                  <h3 className="text-indigo-400 font-bold text-sm tracking-wide border-b border-indigo-500/20 pb-2.5 mb-3.5">PPPOE Account & Payment</h3>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">PPPEO USER:</span><span className="font-mono font-bold text-emerald-400 text-left">{viewingRecord.pppoeUser || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">PPPEO Password:</span><span className="font-mono text-slate-200 text-left">{viewingRecord.pppoePassword || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">PAYMENT ID:</span><span className="font-mono font-bold text-cyan-400 text-left">{viewingRecord.paymentId || '-'}</span></div>
                   </div>
                 </div>
 
-                {/* Card 5 (Bottom Right): Package & Monthly Bill Details */}
-                <div className="md:col-span-8 rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-amber-400 font-bold text-sm tracking-wide border-b border-amber-500/30 pb-2.5 mb-3.5">
-                      Package & Monthly Bill Details
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 pt-1">
-                      {/* Package Name */}
-                      <div className="sm:col-span-6">
-                        <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
-                          PACKAGE NAME
-                        </div>
-                        <div className="font-bold text-white text-sm sm:text-base mt-1 break-words">
-                          {viewingRecord.packageName || '-'}
-                        </div>
-                      </div>
+                {/* 4. IP Address & DNS Routing */}
+                <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 text-left">
+                  <h3 className="text-emerald-400 font-bold text-sm tracking-wide border-b border-emerald-500/20 pb-2.5 mb-3.5">IP Address & DNS Routing</h3>
+                  <div className="space-y-1.5 text-xs font-mono">
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">IP Address:</span><span className="text-slate-200 text-left">{viewingRecord.ipAddress || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">Subnet Mask:</span><span className="text-slate-200 text-left">{viewingRecord.subnetMask || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">Gateway Route:</span><span className="text-slate-200 text-left">{viewingRecord.gateway || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">DNS-1 Server:</span><span className="text-cyan-400 text-left">{viewingRecord.dns1 || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">DNS-2 Server:</span><span className="text-cyan-400 text-left">{viewingRecord.dns2 || '-'}</span></div>
+                  </div>
+                </div>
 
-                      {/* Bandwidth Speed */}
-                      <div className="sm:col-span-3">
-                        <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
-                          BANDWIDTH SPEED
-                        </div>
-                        <div className="font-bold text-white text-sm sm:text-base mt-1 font-mono break-words">
-                          {viewingRecord.bandwidth || '-'}
-                        </div>
-                      </div>
+                {/* 5. Router Access */}
+                <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 text-left">
+                  <h3 className="text-emerald-400 font-bold text-sm tracking-wide border-b border-emerald-500/20 pb-2.5 mb-3.5">Router Access</h3>
+                  <div className="space-y-2 text-xs font-mono">
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">Port Number:</span><span className="font-bold text-emerald-400 text-left">{viewingRecord.port || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">Router User:</span><span className="text-slate-200 text-left">{viewingRecord.routerUser || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">Router Password:</span><span className="text-slate-200 text-left">{viewingRecord.routerPassword || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0 font-sans">User Role:</span><span className="text-slate-200 text-left">Admin</span></div>
+                  </div>
+                </div>
 
-                      {/* Monthly Bill */}
-                      <div className="sm:col-span-3">
-                        <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
-                          MONTHLY BILL
-                        </div>
-                        <div className="font-bold text-emerald-400 text-sm sm:text-base mt-1 font-mono">
-                          ৳ {viewingRecord.billAmount ? Number(viewingRecord.billAmount).toLocaleString() : '0'}
-                        </div>
-                      </div>
-                    </div>
+                {/* 6. Package & Monthly Bill Details */}
+                <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 text-left">
+                  <h3 className="text-amber-400 font-bold text-sm tracking-wide border-b border-amber-500/30 pb-2.5 mb-3.5">Package & Monthly Bill Details</h3>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">PACKAGE NAME:</span><span className="font-bold text-white text-left">{viewingRecord.packageName || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">BANDWIDTH SPEED:</span><span className="font-bold text-white text-left">{viewingRecord.bandwidth || '-'}</span></div>
+                    <div className="flex items-start gap-2"><span className="text-slate-400 w-32 shrink-0">MONTHLY BILL:</span><span className="font-bold text-emerald-400 text-left">৳ {viewingRecord.billAmount ? Number(viewingRecord.billAmount).toLocaleString() : '0'}</span></div>
                   </div>
                 </div>
               </div>
