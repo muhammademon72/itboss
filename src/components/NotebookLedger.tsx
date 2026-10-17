@@ -557,14 +557,22 @@ export const NotebookLedger: React.FC<NotebookLedgerProps> = ({
                     Total Users: {credentials.length}
                   </span>
                 </h1>
-                <p className="text-xs text-slate-300 mt-0.5">
-                  Securely record, manage, and categorize website credentials, user logins, and passwords in custom ledgers.
-                </p>
               </div>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
+            {canEdit && (
+              <button
+                onClick={() => setIsManageLedgersModalOpen(true)}
+                className="px-3.5 py-2 bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center gap-2 transition cursor-pointer"
+                title="Manage All Ledgers"
+              >
+                <Settings className="h-4 w-4 text-indigo-400" />
+                Manage Ledgers
+              </button>
+            )}
+
             {canEdit && (
               <button
                 onClick={() => {
@@ -603,16 +611,6 @@ export const NotebookLedger: React.FC<NotebookLedgerProps> = ({
                 Import
                 <input type="file" accept=".xlsx, .xls, .csv, .json" onChange={handleImportExcel} className="hidden" />
               </label>
-            )}
-
-            {canEdit && (
-              <button
-                onClick={() => openCredentialModal()}
-                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-indigo-600/30 transition cursor-pointer"
-              >
-                <Plus className="h-4 w-4" />
-                Add Credential
-              </button>
             )}
           </div>
         </div>
@@ -673,27 +671,16 @@ export const NotebookLedger: React.FC<NotebookLedgerProps> = ({
             )}
           </div>
 
-          {/* Manage & Add Ledger Buttons */}
+          {/* Add Credential Button */}
           {canEdit && (
             <div className="flex items-center gap-2 shrink-0 self-end md:self-auto">
               <button
-                onClick={() => setIsManageLedgersModalOpen(true)}
-                className="px-3.5 py-2 bg-white hover:bg-slate-100 text-indigo-700 border border-indigo-200 rounded-xl text-xs font-bold flex items-center gap-2 transition shadow-xs cursor-pointer"
-                title="Manage All Ledgers"
-              >
-                <Settings className="h-4 w-4 text-indigo-600" />
-                Manage Ledgers
-              </button>
-              <button
-                onClick={() => {
-                  setEditingLedger(null);
-                  setNewLedgerName('');
-                  setIsLedgerModalOpen(true);
-                }}
-                className="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold flex items-center gap-2 transition shadow-md shadow-indigo-600/20 cursor-pointer"
+                onClick={() => openCredentialModal()}
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold flex items-center gap-2 transition shadow-md shadow-indigo-600/20 cursor-pointer"
+                title="Add New Website Credential"
               >
                 <Plus className="h-4 w-4" />
-                New Ledger
+                Add Credential
               </button>
             </div>
           )}

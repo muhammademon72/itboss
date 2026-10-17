@@ -125,7 +125,9 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
   const [dns1, setDns1] = useState('');
   const [dns2, setDns2] = useState('');
   const [port, setPort] = useState('');
+  const [wifiName, setWifiName] = useState('');
   const [routerUser, setRouterUser] = useState('');
+  const [wifiPassword, setWifiPassword] = useState('');
   const [routerPassword, setRouterPassword] = useState('');
 
   const [packageName, setPackageName] = useState('');
@@ -183,7 +185,9 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
                 dns1: data.dns1 || '',
                 dns2: data.dns2 || '',
                 port: data.port || '',
+                wifiName: data.wifiName || '',
                 routerUser: data.routerUser || '',
+                wifiPassword: data.wifiPassword || '',
                 routerPassword: data.routerPassword || '',
                 packageName: data.packageName || '',
                 bandwidth: data.bandwidth || '',
@@ -287,7 +291,9 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
     setDns1('8.8.8.8');
     setDns2('1.1.1.1');
     setPort('');
+    setWifiName('');
     setRouterUser('');
+    setWifiPassword('');
     setRouterPassword('');
     setPackageName('');
     setBandwidth('');
@@ -317,7 +323,9 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
     setDns1(record.dns1 || '');
     setDns2(record.dns2 || '');
     setPort(record.port || '');
+    setWifiName(record.wifiName || '');
     setRouterUser(record.routerUser || '');
+    setWifiPassword(record.wifiPassword || '');
     setRouterPassword(record.routerPassword || '');
     setPackageName(record.packageName || '');
     setBandwidth(record.bandwidth || '');
@@ -348,7 +356,9 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
       dns1: dns1.trim(),
       dns2: dns2.trim(),
       port: port.trim(),
+      wifiName: wifiName.trim(),
       routerUser: routerUser.trim(),
+      wifiPassword: wifiPassword.trim(),
       routerPassword: routerPassword.trim(),
       packageName: packageName.trim(),
       bandwidth: bandwidth.trim(),
@@ -1386,6 +1396,38 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
                     />
                   </div>
                 </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                  {/* WiFi Name */}
+                  <div>
+                    <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 mb-1">
+                      <Wifi className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>WiFi Name</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ex. Home_WiFi_5G"
+                      value={wifiName}
+                      onChange={(e) => setWifiName(e.target.value)}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder:text-slate-400 font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+                    />
+                  </div>
+
+                  {/* WiFi Password */}
+                  <div>
+                    <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 mb-1">
+                      <Lock className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>WiFi Password</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ex. wifi_secret_123"
+                      value={wifiPassword}
+                      onChange={(e) => setWifiPassword(e.target.value)}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder:text-slate-400 font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* SECTION 4: প্যাকেজ এবং বিলিং / PACKAGE & BILLING */}
@@ -1622,14 +1664,15 @@ export const IspInformationLedger: React.FC<IspInformationLedgerProps> = ({
                   </div>
                 </div>
 
-                {/* 5. Router Access */}
+                {/* 5. Router & WiFi Access */}
                 <div className="rounded-2xl border border-slate-700/60 bg-slate-900/50 p-4 sm:p-5 text-left">
-                  <h3 className="text-emerald-400 font-bold text-sm tracking-wide border-b border-emerald-500/20 pb-2.5 mb-3.5">Router Access</h3>
-                  <div className="space-y-2.5 text-xs font-mono">
+                  <h3 className="text-emerald-400 font-bold text-sm tracking-wide border-b border-emerald-500/20 pb-2.5 mb-3.5">Router & WiFi Access</h3>
+                  <div className="space-y-2 text-xs font-mono">
                     <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0 font-sans">Port Number:</span><span className="font-bold text-emerald-400 text-right">{viewingRecord.port || '-'}</span></div>
                     <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0 font-sans">Router User:</span><span className="text-slate-200 text-right">{viewingRecord.routerUser || '-'}</span></div>
                     <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0 font-sans">Router Password:</span><span className="text-slate-200 text-right">{viewingRecord.routerPassword || '-'}</span></div>
-                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0 font-sans">User Role:</span><span className="text-slate-200 text-right">Admin</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0 font-sans">WiFi Name:</span><span className="text-slate-200 text-right">{viewingRecord.wifiName || '-'}</span></div>
+                    <div className="flex justify-between items-start gap-3"><span className="text-slate-400 shrink-0 font-sans">WiFi Password:</span><span className="text-slate-200 text-right">{viewingRecord.wifiPassword || '-'}</span></div>
                   </div>
                 </div>
 

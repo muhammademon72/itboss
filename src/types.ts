@@ -50,7 +50,9 @@ export interface IspConnection {
   dns1: string;
   dns2: string;
   port: string;
+  wifiName: string;
   routerUser: string;
+  wifiPassword: string;
   routerPassword: string;
 
   // 4. প্যাকেজ এবং বিলিং / PACKAGE & BILLING
