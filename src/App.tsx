@@ -31,8 +31,9 @@ import { MoneyReceiptLedger } from './components/MoneyReceiptLedger';
 import { SimManagementLedger } from './components/SimManagementLedger';
 import { IspInformationLedger } from './components/IspInformationLedger';
 import { IpPhoneLedger } from './components/IpPhoneLedger';
+import { RoadChallanLedger } from './components/RoadChallanLedger';
 import { Requisition, Acknowledgement, ReturnChallan, ProductQuotation, CompanyProfile, PurchaseBill, UserProfile, UserPermissions, DamagedStockProposal } from './types';
-import { FolderHeart, LogIn, LogOut, Code, Heart, Monitor, Terminal, FileCheck, Database, FileText, Settings, PanelLeftOpen, PanelLeftClose, Menu, RefreshCw, Activity, CreditCard, Wifi, BookOpen, Clock, ShieldAlert, CheckCircle2, XCircle, User as UserIcon, Lock, Eye, EyeOff, ShieldCheck, KeyRound, Sparkles, Server, ReceiptText, Smartphone, PhoneCall } from 'lucide-react';
+import { FolderHeart, LogIn, LogOut, Code, Heart, Monitor, Terminal, FileCheck, Database, FileText, Settings, PanelLeftOpen, PanelLeftClose, Menu, RefreshCw, Activity, CreditCard, Wifi, BookOpen, Clock, ShieldAlert, CheckCircle2, XCircle, User as UserIcon, Lock, Eye, EyeOff, ShieldCheck, KeyRound, Sparkles, Server, ReceiptText, Smartphone, PhoneCall, Truck } from 'lucide-react';
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -56,7 +57,7 @@ export default function App() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   
   // Initial view from URL search param or hash
-  const getViewFromUrl = (): 'dashboard' | 'create_form' | 'view_form' | 'copy_requisition' | 'presets_config' | 'acknowledgements' | 'create_acknowledgement' | 'view_acknowledgement' | 'edit_acknowledgement' | 'return_challans' | 'create_return_challan' | 'view_return_challan' | 'edit_return_challan' | 'quotations' | 'create_quotation' | 'edit_quotation' | 'view_quotation' | 'copy_quotation' | 'company_profile' | 'customer_info' | 'user_management' | 'purchase_bills' | 'create_purchase_bill' | 'view_purchase_bill' | 'edit_purchase_bill' | 'copy_purchase_bill' | 'money_receipts' | 'monitor_targets' | 'remote_credentials' | 'hotspot_ledger' | 'notebook_ledger' | 'notes_ledger' | 'servers' | 'sim_management' | 'isp_connections' | 'ip_phone_ledger' | 'identity_card_ledger' => {
+  const getViewFromUrl = (): 'dashboard' | 'create_form' | 'view_form' | 'copy_requisition' | 'presets_config' | 'acknowledgements' | 'create_acknowledgement' | 'view_acknowledgement' | 'edit_acknowledgement' | 'return_challans' | 'create_return_challan' | 'view_return_challan' | 'edit_return_challan' | 'quotations' | 'create_quotation' | 'edit_quotation' | 'view_quotation' | 'copy_quotation' | 'company_profile' | 'customer_info' | 'user_management' | 'purchase_bills' | 'create_purchase_bill' | 'view_purchase_bill' | 'edit_purchase_bill' | 'copy_purchase_bill' | 'money_receipts' | 'monitor_targets' | 'remote_credentials' | 'hotspot_ledger' | 'notebook_ledger' | 'notes_ledger' | 'servers' | 'sim_management' | 'isp_connections' | 'ip_phone_ledger' | 'road_challan_ledger' | 'identity_card_ledger' => {
     try {
       const params = new URLSearchParams(window.location.search);
       const viewParam = params.get('view') || window.location.hash.replace('#', '');
@@ -66,7 +67,7 @@ export default function App() {
         'return_challans', 'create_return_challan', 'view_return_challan', 'edit_return_challan',
         'quotations', 'create_quotation', 'edit_quotation', 'view_quotation', 'copy_quotation',
         'company_profile', 'customer_info', 'user_management', 'purchase_bills',
-        'create_purchase_bill', 'view_purchase_bill', 'edit_purchase_bill', 'copy_purchase_bill', 'money_receipts', 'monitor_targets', 'remote_credentials', 'hotspot_ledger', 'notebook_ledger', 'notes_ledger', 'servers', 'sim_management', 'isp_connections', 'ip_phone_ledger', 'identity_card_ledger',
+        'create_purchase_bill', 'view_purchase_bill', 'edit_purchase_bill', 'copy_purchase_bill', 'money_receipts', 'monitor_targets', 'remote_credentials', 'hotspot_ledger', 'notebook_ledger', 'notes_ledger', 'servers', 'sim_management', 'isp_connections', 'ip_phone_ledger', 'road_challan_ledger', 'identity_card_ledger',
         'damaged_stock_proposals', 'create_damaged_stock_proposal', 'edit_damaged_stock_proposal', 'view_damaged_stock_proposal', 'copy_damaged_stock_proposal'
       ];
       if (validViews.includes(viewParam)) {
@@ -85,7 +86,7 @@ export default function App() {
     | 'return_challans' | 'create_return_challan' | 'view_return_challan' | 'edit_return_challan'
     | 'quotations' | 'create_quotation' | 'edit_quotation' | 'view_quotation' | 'copy_quotation'
     | 'company_profile' | 'customer_info' | 'user_management' | 'purchase_bills'
-    | 'create_purchase_bill' | 'view_purchase_bill' | 'edit_purchase_bill' | 'copy_purchase_bill' | 'money_receipts' | 'monitor_targets' | 'remote_credentials' | 'hotspot_ledger' | 'notebook_ledger' | 'notes_ledger' | 'servers' | 'sim_management' | 'isp_connections' | 'ip_phone_ledger' | 'identity_card_ledger'
+    | 'create_purchase_bill' | 'view_purchase_bill' | 'edit_purchase_bill' | 'copy_purchase_bill' | 'money_receipts' | 'monitor_targets' | 'remote_credentials' | 'hotspot_ledger' | 'notebook_ledger' | 'notes_ledger' | 'servers' | 'sim_management' | 'isp_connections' | 'ip_phone_ledger' | 'road_challan_ledger' | 'identity_card_ledger'
     | 'damaged_stock_proposals' | 'create_damaged_stock_proposal' | 'edit_damaged_stock_proposal' | 'view_damaged_stock_proposal' | 'copy_damaged_stock_proposal'
   >(getViewFromUrl);
 
@@ -180,6 +181,9 @@ export default function App() {
     }
     if (targetView === 'ip_phone_ledger') {
       return perms.ipPhoneLedger?.view ?? true;
+    }
+    if (targetView === 'road_challan_ledger') {
+      return perms.roadChallanLedger?.view ?? true;
     }
 
     return false;
@@ -995,6 +999,20 @@ export default function App() {
                     >
                       <PhoneCall className="h-4 w-4 text-purple-400 shrink-0" />
                       IP Phone Info Ledger
+                    </button>
+                  )}
+
+                  {hasViewPermission('road_challan_ledger') && (
+                    <button
+                      onClick={() => setView('road_challan_ledger' as any)}
+                      className={`flex items-center gap-3 w-full px-3 py-2 text-xs font-semibold text-left cursor-pointer rounded-lg transition-all ${
+                        view === 'road_challan_ledger'
+                          ? 'bg-emerald-600/10 text-emerald-400 border border-emerald-500/20 font-bold'
+                          : 'text-slate-400 hover:bg-slate-800/60'
+                      }`}
+                    >
+                      <Truck className="h-4 w-4 text-emerald-400 shrink-0" />
+                      Road Challan Ledger
                     </button>
                   )}
 
@@ -1930,6 +1948,13 @@ export default function App() {
                       currentUser={user}
                       isAdmin={isAdmin}
                       permissions={userProfile?.permissions?.ipPhoneLedger || { view: true, edit: true, delete: true }}
+                    />
+                  )}
+                  {view === 'road_challan_ledger' && (
+                    <RoadChallanLedger
+                      currentUser={user}
+                      isAdmin={isAdmin}
+                      permissions={userProfile?.permissions?.roadChallanLedger || { view: true, edit: true, delete: true }}
                     />
                   )}
                 </motion.div>

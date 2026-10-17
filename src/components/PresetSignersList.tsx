@@ -228,6 +228,39 @@ export default function PresetSignersList({
     }
   };
 
+  const handleBackup = () => {
+    const dataStr = JSON.stringify(presets, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `backup_signers_${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleRestore = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      try {
+        const importedData = JSON.parse(event.target?.result as string);
+        setSubmitting(true);
+        for (const item of importedData) {
+          const { id, ...data } = item;
+          await addDoc(collection(db, 'presetSigners'), data);
+        }
+        setSuccessMsg('Restore successful!');
+        setSubmitting(false);
+      } catch (err) {
+        setErrorMsg('Failed to restore data.');
+        setSubmitting(false);
+      }
+    };
+    reader.readAsText(file);
+  };
+
   // Divide signers by group
   const applicants = presets.filter(p => p.role === 'Applicant');
   const managers = presets.filter(p => p.role === 'Manager');
@@ -580,6 +613,31 @@ export default function PresetSignersList({
           </div>
         </div>
       )}
+      {/* Backup/Restore/Delete Ledger */}
+      <div className="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200">
+        <h2 className="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+          <Database className="w-4 h-4 text-indigo-600" />
+          Database Operations (Backup/Restore/Delete All)
+        </h2>
+        <div className="flex flex-wrap gap-3">
+          <button
+            onClick={handleBackup}
+            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg transition"
+          >
+            All Backup (JSON)
+          </button>
+          <label className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition cursor-pointer">
+            All Restore
+            <input type="file" accept=".json" onChange={handleRestore} className="hidden" />
+          </label>
+          <button
+            onClick={confirmClearAll}
+            className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-lg transition"
+          >
+            All Delete
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

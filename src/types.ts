@@ -23,6 +23,7 @@ export interface UserPermissions {
   simManagement?: LedgerPermissions;
   ispInformation?: LedgerPermissions;
   ipPhoneLedger?: LedgerPermissions;
+  roadChallanLedger?: LedgerPermissions;
 }
 
 export interface IspConnection {
