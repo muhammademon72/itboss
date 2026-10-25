@@ -34,9 +34,11 @@ export interface RoadChallanRecord {
   challanNo: string;
   date: string;
   fromName: string;
+  fromCompanyName: string;
   fromAddress: string;
   fromMobile: string;
   toName: string;
+  toCompanyName: string;
   toAddress: string;
   toMobile: string;
   note: string;
@@ -88,11 +90,13 @@ export const RoadChallanLedger: React.FC<RoadChallanLedgerProps> = ({
   
   // From details
   const [fromName, setFromName] = useState('Md Emon Hossain');
-  const [fromAddress, setFromAddress] = useState('Dynasty Furnishing Centre Limited. House # 272/B, 3rd Floor, Elephant Road, Dhaka-1205.');
+  const [fromCompanyName, setFromCompanyName] = useState('Dynasty Furnishing Centre Limited');
+  const [fromAddress, setFromAddress] = useState('House # 272/B, 3rd Floor, Elephant Road, Dhaka-1205.');
   const [fromMobile, setFromMobile] = useState('01714 142078, 01783 906072');
 
   // To details
   const [toName, setToName] = useState('');
+  const [toCompanyName, setToCompanyName] = useState('');
   const [toAddress, setToAddress] = useState('');
   const [toMobile, setToMobile] = useState('');
 
@@ -127,9 +131,11 @@ export const RoadChallanLedger: React.FC<RoadChallanLedgerProps> = ({
                 challanNo: data.challanNo || '',
                 date: data.date || new Date().toISOString().split('T')[0],
                 fromName: data.fromName || 'Md Emon Hossain',
+                fromCompanyName: data.fromCompanyName || 'Dynasty Furnishing Centre Limited',
                 fromAddress: data.fromAddress || '',
                 fromMobile: data.fromMobile || '',
                 toName: data.toName || '',
+                toCompanyName: data.toCompanyName || '',
                 toAddress: data.toAddress || '',
                 toMobile: data.toMobile || '',
                 note: data.note || '',
@@ -165,9 +171,11 @@ export const RoadChallanLedger: React.FC<RoadChallanLedgerProps> = ({
     setChallanNo(`CH-${Math.floor(1000 + Math.random() * 9000)}`);
     setDate(new Date().toISOString().split('T')[0]);
     setFromName('Md Emon Hossain');
-    setFromAddress('Dynasty Furnishing Centre Limited. House # 272/B, 3rd Floor, Elephant Road, Dhaka-1205.');
+    setFromCompanyName('Dynasty Furnishing Centre Limited');
+    setFromAddress('House # 272/B, 3rd Floor, Elephant Road, Dhaka-1205.');
     setFromMobile('01714 142078, 01783 906072');
     setToName('');
+    setToCompanyName('');
     setToAddress('');
     setToMobile('');
     setNote('');
@@ -184,9 +192,11 @@ export const RoadChallanLedger: React.FC<RoadChallanLedgerProps> = ({
     setChallanNo(record.challanNo || '');
     setDate(record.date || new Date().toISOString().split('T')[0]);
     setFromName(record.fromName || 'Md Emon Hossain');
+    setFromCompanyName(record.fromCompanyName || 'Dynasty Furnishing Centre Limited');
     setFromAddress(record.fromAddress || '');
     setFromMobile(record.fromMobile || '');
     setToName(record.toName || '');
+    setToCompanyName(record.toCompanyName || '');
     setToAddress(record.toAddress || '');
     setToMobile(record.toMobile || '');
     setNote(record.note || '');
@@ -203,9 +213,11 @@ export const RoadChallanLedger: React.FC<RoadChallanLedgerProps> = ({
     setChallanNo(`CH-${Math.floor(1000 + Math.random() * 9000)}`);
     setDate(new Date().toISOString().split('T')[0]);
     setFromName(record.fromName || 'Md Emon Hossain');
+    setFromCompanyName(record.fromCompanyName || 'Dynasty Furnishing Centre Limited');
     setFromAddress(record.fromAddress || '');
     setFromMobile(record.fromMobile || '');
     setToName(record.toName || '');
+    setToCompanyName(record.toCompanyName || '');
     setToAddress(record.toAddress || '');
     setToMobile(record.toMobile || '');
     setNote(record.note || '');
@@ -239,9 +251,11 @@ export const RoadChallanLedger: React.FC<RoadChallanLedgerProps> = ({
       challanNo: challanNo.trim(),
       date,
       fromName: fromName.trim(),
+      fromCompanyName: fromCompanyName.trim(),
       fromAddress: fromAddress.trim(),
       fromMobile: fromMobile.trim(),
       toName: toName.trim(),
+      toCompanyName: toCompanyName.trim(),
       toAddress: toAddress.trim(),
       toMobile: toMobile.trim(),
       note: note.trim(),
@@ -540,6 +554,7 @@ export const RoadChallanLedger: React.FC<RoadChallanLedgerProps> = ({
                 <th className="py-3 px-4">Challan No</th>
                 <th className="py-3 px-4">Date</th>
                 <th className="py-3 px-4">From (Sender)</th>
+                <th className="py-3 px-4">Company Name</th>
                 <th className="py-3 px-4">To (Receiver)</th>
                 <th className="py-3 px-4 text-center">Status</th>
                 <th className="py-3 px-4 text-right">Actions</th>
@@ -548,7 +563,7 @@ export const RoadChallanLedger: React.FC<RoadChallanLedgerProps> = ({
             <tbody className="divide-y divide-slate-100 text-xs">
               {filteredRecords.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-12 text-center text-slate-400 font-medium">
+                  <td colSpan={8} className="py-12 text-center text-slate-400 font-medium">
                     No road challans found. Click "Create Road Challan" to start.
                   </td>
                 </tr>
@@ -559,6 +574,7 @@ export const RoadChallanLedger: React.FC<RoadChallanLedgerProps> = ({
                     <td className="py-3 px-4 font-mono font-bold text-emerald-700">{record.challanNo || '-'}</td>
                     <td className="py-3 px-4 text-slate-600">{record.date || '-'}</td>
                     <td className="py-3 px-4 font-medium text-slate-700">{record.fromName}</td>
+                    <td className="py-3 px-4 font-medium text-slate-700">{record.toCompanyName || '-'}</td>
                     <td className="py-3 px-4">
                       <div className="font-bold text-slate-800">{record.toName || 'N/A'}</div>
                       <div className="text-[11px] text-slate-500 truncate max-w-[200px]">{record.toAddress}</div>
@@ -706,6 +722,16 @@ export const RoadChallanLedger: React.FC<RoadChallanLedgerProps> = ({
                     />
                   </div>
                   <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">Company Name</label>
+                    <input
+                      type="text"
+                      required
+                      value={fromCompanyName}
+                      onChange={(e) => setFromCompanyName(e.target.value)}
+                      className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:ring-2 focus:ring-emerald-500/20 outline-none"
+                    />
+                  </div>
+                  <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">Sender Address</label>
                     <textarea
                       rows={2}
@@ -738,6 +764,17 @@ export const RoadChallanLedger: React.FC<RoadChallanLedgerProps> = ({
                       placeholder="Ex. Alamgir Hossain"
                       value={toName}
                       onChange={(e) => setToName(e.target.value)}
+                      className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:ring-2 focus:ring-emerald-500/20 outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">Company Name</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Ex. Company Name"
+                      value={toCompanyName}
+                      onChange={(e) => setToCompanyName(e.target.value)}
                       className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:ring-2 focus:ring-emerald-500/20 outline-none"
                     />
                   </div>
@@ -975,6 +1012,7 @@ export const RoadChallanLedger: React.FC<RoadChallanLedgerProps> = ({
                 <div className="p-3.5 border-r-2 border-slate-900 space-y-1">
                   <div className="font-bold underline text-slate-900 text-sm mb-1">From,</div>
                   <div className="font-bold text-slate-900">{viewingRecord.fromName}</div>
+                  <div className="font-bold text-slate-900">{viewingRecord.fromCompanyName}</div>
                   <div className="text-slate-700 leading-relaxed">{viewingRecord.fromAddress}</div>
                   <div className="text-slate-800 font-semibold pt-1">Mobile# {viewingRecord.fromMobile}</div>
                 </div>
@@ -983,6 +1021,7 @@ export const RoadChallanLedger: React.FC<RoadChallanLedgerProps> = ({
                 <div className="p-3.5 space-y-1">
                   <div className="font-bold underline text-slate-900 text-sm mb-1">To,</div>
                   <div className="font-bold text-slate-900">{viewingRecord.toName || 'N/A'}</div>
+                  <div className="font-bold text-slate-900">{viewingRecord.toCompanyName || 'N/A'}</div>
                   <div className="text-slate-700 leading-relaxed">{viewingRecord.toAddress || 'N/A'}</div>
                   <div className="text-slate-800 font-semibold pt-1">Mobile # {viewingRecord.toMobile || 'N/A'}</div>
                 </div>

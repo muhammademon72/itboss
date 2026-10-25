@@ -24,6 +24,16 @@ export interface UserPermissions {
   ispInformation?: LedgerPermissions;
   ipPhoneLedger?: LedgerPermissions;
   roadChallanLedger?: LedgerPermissions;
+  taskManagerLedger?: LedgerPermissions;
+}
+
+export interface TaskRecord {
+  id: string;
+  subject: string;
+  description: string;
+  status: 'Pending' | 'In Progress' | 'Completed' | 'Cancelled';
+  createdAt?: any;
+  updatedAt?: any;
 }
 
 export interface IspConnection {
@@ -506,6 +516,7 @@ export interface IdentityCardInfo {
   bloodGroup: string;
   dob: string;
   proximityCardNumber: string;
+  photoUrl?: string;
   status: 'Active' | 'Inactive';
 }
 
